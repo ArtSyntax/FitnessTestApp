@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_section1">บันทึกคะแนน</string>
+    <string name="title_section2">ชุดการทดสอบ</string>
+    <string name="title_section3">ฐานการทดสอบ</string>
+    <string name="title_section4">ผลการทดสอบ</string>
+    <string name="title_section5">ตั้งค่า</string>
+    <string name="action_settings">ตั้งค่า</string>
+    <string name="action_profile">ข้อมูลส่วนตัว</string>
+    <string name="title_activity_test">ชุดการทดสอบ</string>
+    <string name="test_code">ชุดการทดสอบ KU0258</string>
+    <string name="label_station">ฐาน</string>
+    <string name="label_score">คะแนน</string>
+    <string name="button_send">ส่ง</string>
+    <string name="toast_null_input">ใส่ข้อมูลไม่ครบ</string>
+    <string name="toast_send_seccess">ส่งเรียบร้อย</string>
+    <string name="label_score_result">" \t ได้ "</string>
+
+</resources>

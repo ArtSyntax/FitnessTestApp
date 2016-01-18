@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity
@@ -34,7 +35,7 @@ public class MainActivity
     TextView tvResult;
     Button btSubmit;
     Spinner spStation;
-    String[] stations = new String[]{"ส่วนสูง(ซ.ม.)", "น้ำหนัก(ก.ก.)", "งอตัว(ซ.ม.)", "ลุกนั่ง(ครั้ง)", "วิ่ง(นาที)"};
+    String[] stations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,18 +60,25 @@ public class MainActivity
     @Override
     public void onClick(View v) {
         if (v == btSubmit) { // send score to server
-            String result = tvResult.getText().toString();
-            result = spStation.getSelectedItem().toString() + " \t" + "No. " + etID.getText().toString()
-                    + " \t ได้ " + etScore.getText().toString() + "\n" + result;
-            tvResult.setText(result);
-            etID.setText(null);
-            etScore.setText(null);
-            etID.setFocusableInTouchMode(true);
-            etID.requestFocus();
+            if (etID.getText().toString().length() > 0 && etScore.getText().toString().length() > 0) {
+                String result = tvResult.getText().toString();
+                result = spStation.getSelectedItem().toString() + " \t" + "No. " + etID.getText().toString()
+                        + getString(R.string.label_score_result) + etScore.getText().toString() + "\n" + result;
+                tvResult.setText(result);
+                etID.setText(null);
+                etScore.setText(null);
+                etID.setFocusableInTouchMode(true);
+                etID.requestFocus();
+                Toast.makeText(MainActivity.this, getString(R.string.toast_send_seccess), Toast.LENGTH_SHORT).show();
+                //Log.d("submit", etID.getText().toString().length()+"");
+            } else {
+                Toast.makeText(MainActivity.this, getString(R.string.toast_null_input), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     private void initStations() {
+        stations = new String[]{"ส่วนสูง(ซ.ม.)", "น้ำหนัก(ก.ก.)", "งอตัว(ซ.ม.)", "ลุกนั่ง(ครั้ง)", "วิ่ง(นาที)"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, stations);
         spStation.setAdapter(adapter);
     }
@@ -111,7 +119,7 @@ public class MainActivity
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
-                Intent intent = new Intent(MainActivity.this,TestActivity.class);
+                Intent intent = new Intent(MainActivity.this, TestActivity.class);
                 startActivity(intent);
                 break;
             case 3:
@@ -144,10 +152,8 @@ public class MainActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
+
+            getMenuInflater().inflate(R.menu.global, menu);
             restoreActionBar();
             return true;
         }
@@ -156,13 +162,8 @@ public class MainActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_profile) {
             return true;
         }
 
