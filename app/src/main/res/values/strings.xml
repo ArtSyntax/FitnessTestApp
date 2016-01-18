@@ -22,5 +22,14 @@
     <string name="toast_null_input">missing inputs</string>
     <string name="toast_send_seccess">sent successfully</string>
     <string name="label_score_result">" \t gets "</string>
+    <string name="title_activity_login">Login</string>
+    <string name="label_username">Username</string>
+    <string name="label_password">Password</string>
+    <string name="label_login">Login</string>
+    <string name="label_forgot_password"><u>Forgot Password</u></string>
+    <string name="label_register"><u>Register</u></string>
+    <string name="toast_error_login">Incorrect username or password</string>
+    <string name="toast_login_success">Login Success</string>
+
 
 </resources>
