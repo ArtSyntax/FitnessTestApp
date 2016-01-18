@@ -24,4 +24,10 @@
     <string name="label_register"><u>ลงทะเบียนใหม่</u></string>
     <string name="toast_error_login">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</string>
     <string name="toast_login_success">เข้าสู่ระบบสำเร็จ</string>
+    <string name="soon">อยู่ระหว่างพัฒนา</string>
+    <string name="create_test">สร้างแบบทดสอบใหม่</string>
+    <string name="label_old_test"><b>แบบทดสอบเก่า</b></string>
+    <string name="label_code">รหัส</string>
+    <string name="label_test_name">ชื่อแบบทดสอบ</string>
+    <string name="label_date_update">อัพเดท</string>
 </resources>

@@ -76,6 +76,7 @@
         android:paddingBottom="20dp">
 
         <TextView
+            android:id="@+id/tvForgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -84,6 +85,7 @@
             android:textSize="@dimen/label_size" />
 
         <TextView
+            android:id="@+id/tvRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

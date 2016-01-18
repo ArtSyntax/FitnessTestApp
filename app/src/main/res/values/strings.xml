@@ -17,7 +17,7 @@
     <string name="test_code">Test Code KU0258</string>
     <string name="label_station">Station</string>
     <string name="label_id">No.</string>
-    <string name="label_score">Results</string>
+    <string name="label_score">results</string>
     <string name="button_send">Send</string>
     <string name="toast_null_input">missing inputs</string>
     <string name="toast_send_seccess">sent successfully</string>
@@ -26,10 +26,17 @@
     <string name="label_username">Username</string>
     <string name="label_password">Password</string>
     <string name="label_login">Login</string>
-    <string name="label_forgot_password"><u>Forgot Password</u></string>
-    <string name="label_register"><u>Register</u></string>
-    <string name="toast_error_login">Incorrect username or password</string>
-    <string name="toast_login_success">Login Success</string>
+    <string name="label_forgot_password"><u>forgot password</u></string>
+    <string name="label_register"><u>register</u></string>
+    <string name="toast_error_login">incorrect username or password</string>
+    <string name="toast_login_success">login successful</string>
+    <string name="soon">coming soon</string>
+    <string name="create_test">Create Test</string>
+    <string name="label_old_test"><b>My old tests</b></string>
+    <string name="label_code">Code</string>
+    <string name="label_test_name">Name</string>
+    <string name="label_date_update">Update</string>
+    <string name="label_number">"No. "</string>
 
 
 </resources>

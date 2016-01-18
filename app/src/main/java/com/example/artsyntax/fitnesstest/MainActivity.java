@@ -32,10 +32,17 @@ public class MainActivity
 
     EditText etID;
     EditText etScore;
-    TextView tvResult;
+    TextView tvResultNumber;
+    TextView tvResultScore;
+    TextView tvResultStation;
+    TextView tvResultStatus;
     Button btSubmit;
     Spinner spStation;
     String[] stations;
+    String resultNumber;
+    String resultScore;
+    String resultStation;
+    String resultStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +68,18 @@ public class MainActivity
     public void onClick(View v) {
         if (v == btSubmit) { // send score to server
             if (etID.getText().toString().length() > 0 && etScore.getText().toString().length() > 0) {
-                String result = tvResult.getText().toString();
-                result = spStation.getSelectedItem().toString() + " \t" + "No. " + etID.getText().toString()
-                        + getString(R.string.label_score_result) + etScore.getText().toString() + "\n" + result;
-                tvResult.setText(result);
+
+
+                resultStation = spStation.getSelectedItem().toString() + "\n" + resultStation;
+                resultNumber = getString(R.string.label_number) + etID.getText().toString() + "\n" + resultNumber;
+                resultScore = getString(R.string.label_score_result) + etScore.getText().toString() + "\n" + resultScore;
+                resultStatus = "/\n" + resultStatus;
+
+                tvResultStation.setText(resultStation);
+                tvResultNumber.setText(resultNumber);
+                tvResultScore.setText(resultScore);
+                tvResultStatus.setText(resultStatus);
+
                 etID.setText(null);
                 etScore.setText(null);
                 etID.setFocusableInTouchMode(true);
@@ -86,9 +101,17 @@ public class MainActivity
     private void initInstances() {
         etID = (EditText) findViewById(R.id.etID);
         etScore = (EditText) findViewById(R.id.etScore);
-        tvResult = (TextView) findViewById(R.id.tvResult);
         btSubmit = (Button) findViewById(R.id.btSubmit);
         spStation = (Spinner) findViewById(R.id.spStation);
+        tvResultNumber = (TextView) findViewById(R.id.tvResultNumber);
+        tvResultScore = (TextView) findViewById(R.id.tvResultScore);
+        tvResultStation = (TextView) findViewById(R.id.tvResultStation);
+        tvResultStatus = (TextView) findViewById(R.id.tvResultStatus);
+
+        resultNumber = tvResultNumber.getText().toString();
+        resultScore = tvResultScore.getText().toString();
+        resultStation = tvResultStation.getText().toString();
+        resultStatus = tvResultStatus.getText().toString();
     }
 
 
@@ -115,7 +138,6 @@ public class MainActivity
         switch (number) {
             case 1:
                 mTitle = getString(R.string.title_section1);
-                changeTextview(getString(R.string.title_section1));
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
@@ -124,28 +146,21 @@ public class MainActivity
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
-                changeTextview(getString(R.string.title_section3));
                 break;
             case 4:
                 mTitle = getString(R.string.title_section4);
-                changeTextview(getString(R.string.title_section4));
                 break;
             case 5:
                 mTitle = getString(R.string.title_section5);
-                changeTextview(getString(R.string.title_section5));
                 break;
         }
-    }
-
-    private void changeTextview(String text) {
-        ((TextView) findViewById(R.id.text_session)).setText(text);
     }
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        //actionBar.setTitle(mTitle);
     }
 
 
