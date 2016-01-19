@@ -37,6 +37,6 @@
     <string name="label_test_name">Name</string>
     <string name="label_date_update">Update</string>
     <string name="label_number">"No. "</string>
-
+    <string name="title_activity_base">BaseActivity</string>
 
 </resources>
