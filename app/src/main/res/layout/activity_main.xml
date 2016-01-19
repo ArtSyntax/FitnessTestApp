@@ -10,7 +10,8 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/padding">
 
         <TextView
             android:id="@+id/tvTestCode"
@@ -24,23 +25,28 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_height"
             android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/padding_left"
-                android:text="@string/label_station"
-                android:textSize="@dimen/label_size" />
-
-            <Spinner
-                android:id="@+id/spStation"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/padding_left"
-                android:layout_weight="2.2"
-                android:spinnerMode="dropdown"
-                android:textSize="@dimen/label_size" />
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/label_station"
+                    android:textSize="@dimen/label_size" />
+
+                <Spinner
+                    android:id="@+id/spStation"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/padding"
+                    android:layout_weight="2.5"
+                    android:spinnerMode="dropdown"
+                    android:textSize="@dimen/label_size" />
+            </LinearLayout>
 
             <View
                 android:layout_width="0dp"
@@ -52,47 +58,54 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_height"
             android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/padding_left"
-                android:text="@string/label_id"
-                android:textSize="@dimen/label_size" />
-
-            <EditText
-                android:id="@+id/etID"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.2"
-                android:gravity="center_vertical"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:textSize="@dimen/label_size" />
+                android:layout_weight="3"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/label_id"
+                    android:textSize="@dimen/label_size" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/padding_left"
-                android:text="@string/label_score"
-                android:textSize="@dimen/label_size" />
+                <EditText
+                    android:id="@+id/etID"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textSize="@dimen/label_size" />
 
-            <EditText
-                android:id="@+id/etScore"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.2"
-                android:gravity="center_vertical"
-                android:imeOptions="actionDone"
-                android:inputType="numberDecimal"
-                android:textSize="@dimen/label_size" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/padding"
+                    android:text="@string/label_score"
+                    android:textSize="@dimen/label_size" />
+
+                <EditText
+                    android:id="@+id/etScore"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:textSize="@dimen/label_size" />
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/btSubmit"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+
                 android:gravity="center"
                 android:text="@string/button_send"
                 android:textSize="@dimen/label_size" />
@@ -135,6 +148,7 @@
                 android:padding="16dp"
                 android:textSize="@dimen/label_size" />
         </LinearLayout>
+
     </LinearLayout>
 
     <fragment
