@@ -30,4 +30,5 @@
     <string name="label_code">รหัส</string>
     <string name="label_test_name">ชื่อแบบทดสอบ</string>
     <string name="label_date_update">อัพเดท</string>
+    <string name="Welcome">"ยินดีต้อนรับ "</string>
 </resources>

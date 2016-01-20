@@ -1,5 +1,6 @@
 package com.example.artsyntax.fitnesstest;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -45,12 +46,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v == btLogin) { // send score to server
-            if (etUsername.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
-                Toast.makeText(LoginActivity.this, getString(R.string.toast_login_success), Toast.LENGTH_SHORT).show();
-                this.finish();
-            } else {
-                Toast.makeText(LoginActivity.this, getString(R.string.toast_error_login), Toast.LENGTH_SHORT).show();
-            }
+            loginUsername();
         }
         if (v==tvForgotPassword){
             Toast.makeText(LoginActivity.this, getString(R.string.soon), Toast.LENGTH_SHORT).show();
@@ -63,17 +59,32 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_GO) {
-            if (etUsername.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
-                Toast.makeText(LoginActivity.this, getString(R.string.toast_login_success), Toast.LENGTH_SHORT).show();
-                this.finish();
-                return true;
-            } else {
-                Toast.makeText(LoginActivity.this, getString(R.string.toast_error_login), Toast.LENGTH_SHORT).show();
-            }
+            loginUsername();
+            return true;
         }
         return false;
     }
 
+    private void loginUsername() {
+        if (etUsername.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result",etUsername.getText().toString());
+            setResult(RESULT_OK,returnIntent);
+            //Toast.makeText(LoginActivity.this, getString(R.string.toast_login_success), Toast.LENGTH_SHORT).show();
+            finish();
+        } else if(etUsername.getText().toString().length() > 0 && etPassword.getText().toString().length() <= 0){
+            etPassword.setFocusableInTouchMode(true);
+            etPassword.requestFocus();
+            Toast.makeText(LoginActivity.this, getString(R.string.toast_error_login), Toast.LENGTH_SHORT).show();
+        } else {
+            etUsername.setFocusableInTouchMode(true);
+            etUsername.requestFocus();
+            etUsername.setText("");
+            etPassword.setText("");
+            Toast.makeText(LoginActivity.this, getString(R.string.toast_error_login), Toast.LENGTH_SHORT).show();
+        }
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -90,6 +101,4 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }

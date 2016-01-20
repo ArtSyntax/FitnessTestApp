@@ -30,6 +30,7 @@ public class MainActivity
         extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, View.OnClickListener {
 
+    static final int GET_USERNAME_REQUEST = 12345;
     EditText etID;
     EditText etScore;
     TextView tvResultNumber;
@@ -156,6 +157,16 @@ public class MainActivity
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GET_USERNAME_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(MainActivity.this, getString(R.string.Welcome) + data.getStringExtra("result"), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -180,7 +191,7 @@ public class MainActivity
         int id = item.getItemId();
         if (id == R.id.action_profile) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, GET_USERNAME_REQUEST);
             return true;
         }
 
@@ -214,8 +225,7 @@ public class MainActivity
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
 
