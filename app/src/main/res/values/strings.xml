@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">FitnessTest</string>
-    <string name="title_section1">Score Record</string>
+    <string name="title_section1">Recording</string>
     <string name="title_section2">Tests</string>
     <string name="title_section3">Stations</string>
     <string name="title_section4">Results</string>
@@ -17,11 +17,11 @@
     <string name="test_code">Test Code KU0258</string>
     <string name="label_station">Station</string>
     <string name="label_id">No.</string>
-    <string name="label_score">results</string>
+    <string name="label_score">Results</string>
     <string name="button_send">Send</string>
     <string name="toast_null_input">missing inputs</string>
     <string name="toast_send_seccess">sent successfully</string>
-    <string name="label_score_result">" \t gets "</string>
+    <string name="label_score_result">"gets "</string>
     <string name="title_activity_login">Login</string>
     <string name="label_username">Username</string>
     <string name="label_password">Password</string>

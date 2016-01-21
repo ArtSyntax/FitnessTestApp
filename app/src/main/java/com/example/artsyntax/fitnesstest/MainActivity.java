@@ -3,6 +3,7 @@ package com.example.artsyntax.fitnesstest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -12,12 +13,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,18 +31,15 @@ import android.widget.Toast;
 
 public class MainActivity
         extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, View.OnClickListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, View.OnClickListener, TextView.OnEditorActionListener {
 
     static final int GET_USERNAME_REQUEST = 12345;
     EditText etID;
     EditText etScore;
     TextView tvResultNumber;
     TextView tvResultScore;
-    TextView tvResultStation;
     TextView tvResultStatus;
     Button btSubmit;
-    Spinner spStation;
-    String[] stations;
     String resultNumber;
     String resultScore;
     String resultStation;
@@ -48,12 +48,16 @@ public class MainActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getResources().getBoolean(R.bool.portrait_only)) {      // phone set screen portrait
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         setContentView(R.layout.activity_main);
 
         initInstances(); //findViewById
-        initStations(); //initDropdownMenu
 
         btSubmit.setOnClickListener(this);
+        etScore.setOnEditorActionListener(this);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -68,50 +72,61 @@ public class MainActivity
     @Override
     public void onClick(View v) {
         if (v == btSubmit) { // send score to server
-            if (etID.getText().toString().length() > 0 && etScore.getText().toString().length() > 0) {
-
-
-                resultStation = spStation.getSelectedItem().toString() + "\n" + resultStation;
-                resultNumber = getString(R.string.label_number) + etID.getText().toString() + "\n" + resultNumber;
-                resultScore = getString(R.string.label_score_result) + etScore.getText().toString() + "\n" + resultScore;
-                resultStatus = "/\n" + resultStatus;
-
-                tvResultStation.setText(resultStation);
-                tvResultNumber.setText(resultNumber);
-                tvResultScore.setText(resultScore);
-                tvResultStatus.setText(resultStatus);
-
-                etID.setText(null);
-                etScore.setText(null);
-                etID.setFocusableInTouchMode(true);
-                etID.requestFocus();
-                Toast.makeText(MainActivity.this, getString(R.string.toast_send_seccess), Toast.LENGTH_SHORT).show();
-                //Log.d("submit", etID.getText().toString().length()+"");
-            } else {
-                Toast.makeText(MainActivity.this, getString(R.string.toast_null_input), Toast.LENGTH_SHORT).show();
-            }
+            submitScore();
         }
     }
 
-    private void initStations() {
-        stations = new String[]{"ส่วนสูง(ซ.ม.)", "น้ำหนัก(ก.ก.)", "งอตัว(ซ.ม.)", "ลุกนั่ง(ครั้ง)", "วิ่ง(นาที)"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, stations);
-        spStation.setAdapter(adapter);
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_GO) {
+            submitScore();
+            return true;
+        }
+        return false;
     }
+
+    private void submitScore() {
+        if (etID.getText().toString().length() > 0 && etScore.getText().toString().length() > 0) {
+
+            resultNumber = getString(R.string.label_number) + etID.getText().toString() + "\n" + resultNumber;
+            resultScore = getString(R.string.label_score_result) + etScore.getText().toString() + "\n" + resultScore;
+            resultStatus = "/\n" + resultStatus;
+
+            tvResultNumber.setText(resultNumber);
+            tvResultScore.setText(resultScore);
+            tvResultStatus.setText(resultStatus);
+
+            etID.setText(null);
+            etScore.setText(null);
+            etID.setFocusableInTouchMode(true);
+            etID.requestFocus();
+            Toast.makeText(MainActivity.this, getString(R.string.toast_send_seccess), Toast.LENGTH_SHORT).show();
+            //Log.d("submit", etID.getText().toString().length()+"");
+        } else if (etID.getText().toString().length() > 0 && etScore.getText().toString().length() <= 0) {
+            etScore.setFocusableInTouchMode(true);
+            etScore.requestFocus();
+            Toast.makeText(MainActivity.this, getString(R.string.toast_null_input), Toast.LENGTH_SHORT).show();
+        } else if (etID.getText().toString().length() <= 0 && etScore.getText().toString().length() > 0) {
+            etID.setFocusableInTouchMode(true);
+            etID.requestFocus();
+            Toast.makeText(MainActivity.this, getString(R.string.toast_null_input), Toast.LENGTH_SHORT).show();
+        } else {
+            etID.setFocusableInTouchMode(true);
+            etID.requestFocus();
+            Toast.makeText(MainActivity.this, getString(R.string.toast_null_input), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void initInstances() {
         etID = (EditText) findViewById(R.id.etID);
         etScore = (EditText) findViewById(R.id.etScore);
         btSubmit = (Button) findViewById(R.id.btSubmit);
-        spStation = (Spinner) findViewById(R.id.spStation);
         tvResultNumber = (TextView) findViewById(R.id.tvResultNumber);
         tvResultScore = (TextView) findViewById(R.id.tvResultScore);
-        tvResultStation = (TextView) findViewById(R.id.tvResultStation);
         tvResultStatus = (TextView) findViewById(R.id.tvResultStatus);
 
         resultNumber = tvResultNumber.getText().toString();
         resultScore = tvResultScore.getText().toString();
-        resultStation = tvResultStation.getText().toString();
         resultStatus = tvResultStatus.getText().toString();
     }
 

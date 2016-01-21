@@ -1,6 +1,6 @@
 <resources>
-    <dimen name="label_size">24sp</dimen>
-    <dimen name="layout_height">60dp</dimen>
+    <dimen name="label_size">34sp</dimen>
+    <dimen name="layout_height">80dp</dimen>
     <dimen name="padding">15dp</dimen>
     <dimen name="margin">15dp</dimen>
     <dimen name="margin_small">10dp</dimen>

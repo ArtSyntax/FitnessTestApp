@@ -15,7 +15,7 @@
     <string name="button_send">ส่ง</string>
     <string name="toast_null_input">ใส่ข้อมูลไม่ครบ</string>
     <string name="toast_send_seccess">ส่งเรียบร้อย</string>
-    <string name="label_score_result">" \t ได้ "</string>
+    <string name="label_score_result">"ได้ "</string>
     <string name="title_activity_login">เข้าสู่ระบบ</string>
     <string name="label_username">ชื่อผู้ใช้</string>
     <string name="label_password">รหัสผ่าน</string>
