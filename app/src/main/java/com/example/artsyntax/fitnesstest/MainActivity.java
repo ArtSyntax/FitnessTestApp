@@ -24,6 +24,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,8 @@ public class MainActivity
     TextView tvResultScore;
     TextView tvResultStatus;
     Button btSubmit;
+    ScrollView svResult;
+
     String resultNumber;
     String resultScore;
     String resultStation;
@@ -99,6 +102,8 @@ public class MainActivity
             etScore.setText(null);
             etID.setFocusableInTouchMode(true);
             etID.requestFocus();
+
+            svResult.fullScroll(ScrollView.FOCUS_UP);
             Toast.makeText(MainActivity.this, getString(R.string.toast_send_seccess), Toast.LENGTH_SHORT).show();
             //Log.d("submit", etID.getText().toString().length()+"");
         } else if (etID.getText().toString().length() > 0 && etScore.getText().toString().length() <= 0) {
@@ -124,6 +129,7 @@ public class MainActivity
         tvResultNumber = (TextView) findViewById(R.id.tvResultNumber);
         tvResultScore = (TextView) findViewById(R.id.tvResultScore);
         tvResultStatus = (TextView) findViewById(R.id.tvResultStatus);
+        svResult = (ScrollView) findViewById(R.id.svResult);
 
         resultNumber = tvResultNumber.getText().toString();
         resultScore = tvResultScore.getText().toString();
