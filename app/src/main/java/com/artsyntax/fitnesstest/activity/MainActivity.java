@@ -2,6 +2,7 @@ package com.artsyntax.fitnesstest.activity;
 
 import android.app.FragmentManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_profile:
                 if (fragment instanceof LoginFragment == false) {
                     getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(
+                                    R.anim.from_right, R.anim.to_left,
+                                    R.anim.from_left, R.anim.to_right
+                            )
                             .replace(R.id.contentContainer, LoginFragment.newInstance())
                             .addToBackStack(null)
                             .commit();
@@ -63,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_test:
                 if (fragment instanceof TestFragment == false) {
                     getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .replace(R.id.contentContainer, TestFragment.newInstance())
                             .addToBackStack(null)
                             .commit();
