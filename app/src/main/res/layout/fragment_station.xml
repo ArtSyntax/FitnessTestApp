@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="@dimen/padding">
 
     <Button
-        android:background="@drawable/selector_btn_default"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
+        android:background="@drawable/selector_btn_default"
         android:layout_gravity="center_horizontal"
-        android:text="@string/create_test"
+        android:text="@string/create_station"
         android:textSize="@dimen/label_size" />
 
     <ScrollView
@@ -34,4 +34,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

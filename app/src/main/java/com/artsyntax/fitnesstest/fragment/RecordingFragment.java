@@ -22,9 +22,6 @@ public class RecordingFragment extends Fragment {
 
     EditText etID;
     EditText etScore;
-    TextView tvResultNumber;
-    TextView tvResultScore;
-    TextView tvResultStatus;
     Button btSubmit;
     ScrollView svResult;
 
@@ -60,9 +57,6 @@ public class RecordingFragment extends Fragment {
         etID = (EditText) rootView.findViewById(R.id.etID);
         etScore = (EditText) rootView.findViewById(R.id.etScore);
         btSubmit = (Button) rootView.findViewById(R.id.btSubmit);
-        tvResultNumber = (TextView) rootView.findViewById(R.id.tvResultNumber);
-        tvResultScore = (TextView) rootView.findViewById(R.id.tvResultScore);
-        tvResultStatus = (TextView) rootView.findViewById(R.id.tvResultStatus);
         svResult = (ScrollView) rootView.findViewById(R.id.svResult);
     }
 

@@ -11,19 +11,11 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:gravity="center_vertical"
-            android:text="@string/label_station"
-            android:textSize="@dimen/label_size" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
             android:freezesText="true"
             android:gravity="center_vertical"
+            android:text="@string/label_station"
             android:textSize="@dimen/label_size" />
     </LinearLayout>
 
@@ -32,20 +24,12 @@
         android:layout_height="@dimen/layout_height"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:gravity="center_vertical"
-            android:text="@string/label_id"
-            android:textSize="@dimen/label_size" />
-
         <EditText
             android:id="@+id/etID"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3"
             android:gravity="center_vertical"
+            android:hint="@string/label_id"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:textSize="@dimen/label_size" />
@@ -58,39 +42,30 @@
         android:layout_height="@dimen/layout_height"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/etScore"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:orientation="horizontal">
+            android:gravity="center_vertical"
+            android:hint="@string/label_score"
+            android:imeOptions="actionGo"
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/label_size" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5"
-                android:gravity="center_vertical"
-                android:text="@string/label_score"
-                android:textSize="@dimen/label_size" />
-
-            <EditText
-                android:id="@+id/etScore"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center_vertical"
-                android:imeOptions="actionGo"
-                android:inputType="numberDecimal"
-                android:textSize="@dimen/label_size" />
-        </LinearLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/btSubmit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
+        android:background="@drawable/selector_btn_default"
         android:gravity="center"
         android:text="@string/button_send"
         android:textSize="@dimen/label_size" />
+
+    <!--<com.artsyntax.fitnesstest.view.ResultFeedCustomViewGroup-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"></>-->
 
     <ScrollView
         android:id="@+id/svResult"
@@ -99,36 +74,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_small"
+            android:layout_height="@dimen/layout_height"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvResultNumber"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:freezesText="true"
-                android:padding="@dimen/padding_small"
-                android:textSize="@dimen/label_size" />
 
-            <TextView
-                android:id="@+id/tvResultScore"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.2"
-                android:freezesText="true"
-                android:padding="@dimen/padding_small"
-                android:textSize="@dimen/label_size" />
 
-            <TextView
-                android:id="@+id/tvResultStatus"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:freezesText="true"
-                android:padding="@dimen/padding_small"
-                android:textSize="@dimen/label_size" />
         </LinearLayout>
 
     </ScrollView>

@@ -1,56 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="@dimen/padding">
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
-        android:orientation="horizontal">
+        android:hint="@string/label_email"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:textSize="@dimen/label_size" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical"
-            android:text="@string/label_username"
-            android:textSize="@dimen/label_size" />
-
-        <EditText
-            android:id="@+id/etUsername"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
-            android:singleLine="true"
-            android:textSize="@dimen/label_size" />
-    </LinearLayout>
-
-    <LinearLayout
+    <EditText
+        android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical"
-            android:text="@string/label_password"
-            android:textSize="@dimen/label_size" />
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:imeOptions="actionGo"
-            android:inputType="textPassword"
-            android:textSize="@dimen/label_size" />
-    </LinearLayout>
+        android:hint="@string/label_password"
+        android:imeOptions="actionGo"
+        android:inputType="textPassword"
+        android:textSize="@dimen/label_size" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,11 +31,12 @@
         android:orientation="vertical">
 
         <Button
+            android:background="@drawable/selector_btn_default"
             android:id="@+id/btLogin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="@dimen/margin"
             android:text="@string/label_login"
             android:textSize="@dimen/label_size" />
     </LinearLayout>

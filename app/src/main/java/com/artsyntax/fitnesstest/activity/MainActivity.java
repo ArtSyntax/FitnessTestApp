@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.fragment.LoginFragment;
 import com.artsyntax.fitnesstest.fragment.RecordingFragment;
+import com.artsyntax.fitnesstest.fragment.ResultFragment;
+import com.artsyntax.fitnesstest.fragment.StationFragment;
 import com.artsyntax.fitnesstest.fragment.TestFragment;
 
 import junit.framework.Test;
@@ -70,6 +72,26 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction()
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .replace(R.id.contentContainer, TestFragment.newInstance())
+                            .addToBackStack(null)
+                            .commit();
+                }
+                return true;
+
+            case R.id.action_station:
+                if (fragment instanceof StationFragment == false) {
+                    getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .replace(R.id.contentContainer, StationFragment.newInstance())
+                            .addToBackStack(null)
+                            .commit();
+                }
+                return true;
+
+            case R.id.action_result:
+                if (fragment instanceof ResultFragment == false) {
+                    getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .replace(R.id.contentContainer, ResultFragment.newInstance())
                             .addToBackStack(null)
                             .commit();
                 }

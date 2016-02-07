@@ -9,4 +9,12 @@
         android:id="@+id/action_test"
         android:title="Test"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_station"
+        android:title="Station"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_result"
+        android:title="Result"
+        app:showAsAction="never"/>
 </menu>
