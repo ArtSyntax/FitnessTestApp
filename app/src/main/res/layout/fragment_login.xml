@@ -31,7 +31,6 @@
         android:orientation="vertical">
 
         <Button
-            android:background="@drawable/selector_btn_default"
             android:id="@+id/btLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

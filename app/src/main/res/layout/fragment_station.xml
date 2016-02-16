@@ -8,7 +8,6 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
-        android:background="@drawable/selector_btn_default"
         android:layout_gravity="center_horizontal"
         android:text="@string/create_station"
         android:textSize="@dimen/label_size" />

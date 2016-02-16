@@ -6,7 +6,6 @@
     android:padding="@dimen/padding">
 
     <Button
-        android:background="@drawable/selector_btn_default"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
         android:layout_gravity="center_horizontal"
