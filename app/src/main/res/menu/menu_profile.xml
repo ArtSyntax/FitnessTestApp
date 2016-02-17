@@ -7,14 +7,14 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_test"
-        android:title="Test"
+        android:title="แบบทดสอบ"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_station"
-        android:title="Station"
+        android:title="ฐานทดสอบ"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_result"
-        android:title="Result"
+        android:title="ผลทดสอบ"
         app:showAsAction="never"/>
 </menu>

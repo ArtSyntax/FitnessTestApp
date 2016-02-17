@@ -5,8 +5,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
+import com.artsyntax.fitnesstest.dao.PhotoItemCollectionDao;
+import com.artsyntax.fitnesstest.manager.http.HttpManager;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ResultFragment extends Fragment {
@@ -31,6 +40,40 @@ public class ResultFragment extends Fragment {
 
     private void initInstances(View rootView) {
         // init instance with rootView.findViewById here
+        Call<PhotoItemCollectionDao> call = HttpManager.getInstance().getService().loadPhotoList();
+        call.enqueue(new Callback<PhotoItemCollectionDao>() {
+            @Override
+            public void onResponse(Call<PhotoItemCollectionDao> call, Response<PhotoItemCollectionDao> response) {
+                if (response.isSuccess()) {
+                    PhotoItemCollectionDao dao = response.body();
+
+                    Toast.makeText(getActivity(),
+                            dao.getData().get(0).getCaption(),
+                            Toast.LENGTH_SHORT)
+                            .show();
+                } else {              // 404 not found
+                    try {
+                        Toast.makeText(getActivity(),
+                                response.errorBody().string(),
+                                Toast.LENGTH_SHORT)
+                                .show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PhotoItemCollectionDao> call, Throwable t) {     // cannot connect server
+
+                Toast.makeText(getActivity(),
+                        t.toString(),
+                        Toast.LENGTH_SHORT)
+                        .show();
+
+
+            }
+        });
     }
 
     @Override

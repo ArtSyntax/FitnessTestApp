@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
         else // menu
             switch (item.getItemId()) {
-
                 case R.id.action_profile:
                     if (fragment instanceof LoginFragment == false) {
                         getSupportFragmentManager().beginTransaction()
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                         R.anim.from_left, R.anim.to_right
                                 )
                                 .replace(R.id.contentContainer, LoginFragment.newInstance())
-                                .addToBackStack(null)
+                                //.addToBackStack(null)
                                 .commit();
                         //Toast.makeText(MainActivity.this, "Test OK", Toast.LENGTH_SHORT).show();
                     }
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction()
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .replace(R.id.contentContainer, TestFragment.newInstance())
-                                .addToBackStack(null)
+                               // .addToBackStack(null)
                                 .commit();
                     }
                     return true;
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction()
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .replace(R.id.contentContainer, StationFragment.newInstance())
-                                .addToBackStack(null)
+                                //.addToBackStack(null)
                                 .commit();
                     }
                     return true;
@@ -130,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction()
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .replace(R.id.contentContainer, ResultFragment.newInstance())
-                                .addToBackStack(null)
+                                //.addToBackStack(null)
                                 .commit();
                     }
                     return true;
