@@ -4,12 +4,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.artsyntax.fitnesstest.view.ResultFeedCustomViewGroup;
+import com.artsyntax.fitnesstest.view.StationList;
+import com.artsyntax.fitnesstest.view.TestList;
 
 /**
  * Created by ArtSyntax on 17/2/2559.
  */
-public class ResultFeedAdapter extends BaseAdapter {
+public class StationListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
@@ -28,11 +29,11 @@ public class ResultFeedAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ResultFeedCustomViewGroup item;
+        StationList item;
         if (convertView != null)
-            item = (ResultFeedCustomViewGroup) convertView;
+            item = (StationList) convertView;
         else
-            item = new ResultFeedCustomViewGroup(parent.getContext());
+            item = new StationList(parent.getContext());
         return item;
     }
 }

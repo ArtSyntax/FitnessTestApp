@@ -13,7 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.artsyntax.fitnesstest.R;
-import com.artsyntax.fitnesstest.adapter.ResultFeedAdapter;
+import com.artsyntax.fitnesstest.adapter.ResultListAdapter;
 
 /**
  * Created by ArtSyntax on 27/1/2559.
@@ -25,9 +25,8 @@ public class RecordingFragment extends Fragment {
     EditText etID;
     EditText etScore;
     Button btSubmit;
-    ScrollView svResult;
     ListView listView;
-    ResultFeedAdapter listAdapter;
+    ResultListAdapter listAdapter;
 
     public static RecordingFragment newInstance(int someVar){
         RecordingFragment fragment = new RecordingFragment();
@@ -56,9 +55,8 @@ public class RecordingFragment extends Fragment {
         etID = (EditText) rootView.findViewById(R.id.etID);
         etScore = (EditText) rootView.findViewById(R.id.etScore);
         btSubmit = (Button) rootView.findViewById(R.id.btSubmit);
-        svResult = (ScrollView) rootView.findViewById(R.id.svResult);
         listView = (ListView) rootView.findViewById(R.id.listView);
-        listAdapter = new ResultFeedAdapter();
+        listAdapter = new ResultListAdapter();
         listView.setAdapter(listAdapter);
     }
 

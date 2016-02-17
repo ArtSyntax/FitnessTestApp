@@ -5,11 +5,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.artsyntax.fitnesstest.R;
+import com.artsyntax.fitnesstest.adapter.StationListAdapter;
 
 
 public class StationFragment extends Fragment {
+    ListView listView;
+    StationListAdapter listAdapter;
 
     public StationFragment() {
         super();
@@ -31,6 +35,9 @@ public class StationFragment extends Fragment {
 
     private void initInstances(View rootView) {
         // init instance with rootView.findViewById here
+        listView = (ListView)rootView.findViewById(R.id.listView);
+        listAdapter = new StationListAdapter();
+        listView.setAdapter(listAdapter);
     }
 
     @Override

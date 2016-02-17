@@ -8,32 +8,30 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.artsyntax.fitnesstest.R;
-import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 import com.inthecheesefactory.thecheeselibrary.view.BaseCustomViewGroup;
 import com.inthecheesefactory.thecheeselibrary.view.state.BundleSavedState;
 
 
-public class ResultFeedCustomViewGroup extends BaseCustomViewGroup {
+public class TestList extends BaseCustomViewGroup {
 
-    private TextView tvResultFeedID;
-    private TextView tvResultFeedScore;
-    private TextView tvResultFeedStation;
-    private TextView tvResultFeedDate;
+    private TextView tvTestListCode;
+    private TextView tvTestListDate;
+    private TextView tvTestListName;
 
-    public ResultFeedCustomViewGroup(Context context) {
+    public TestList(Context context) {
         super(context);
         initInflate();
         initInstances();
     }
 
-    public ResultFeedCustomViewGroup(Context context, AttributeSet attrs) {
+    public TestList(Context context, AttributeSet attrs) {
         super(context, attrs);
         initInflate();
         initInstances();
         initWithAttrs(attrs, 0, 0);
     }
 
-    public ResultFeedCustomViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TestList(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initInflate();
         initInstances();
@@ -41,7 +39,7 @@ public class ResultFeedCustomViewGroup extends BaseCustomViewGroup {
     }
 
     @TargetApi(21)
-    public ResultFeedCustomViewGroup(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TestList(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initInflate();
         initInstances();
@@ -49,15 +47,14 @@ public class ResultFeedCustomViewGroup extends BaseCustomViewGroup {
     }
 
     private void initInflate() {
-        inflate(getContext(), R.layout.layout_result_feed, this);
+        inflate(getContext(), R.layout.list_test, this);
     }
 
     private void initInstances() {
         // findViewById here
-        tvResultFeedID = (TextView) findViewById(R.id.tvResultFeedID);
-        tvResultFeedScore = (TextView) findViewById(R.id.tvResultFeedScore);
-        tvResultFeedStation = (TextView) findViewById(R.id.tvResultFeedStation);
-        tvResultFeedDate = (TextView) findViewById(R.id.tvResultFeedDate);
+        tvTestListCode = (TextView) findViewById(R.id.tvTestListCode);
+        tvTestListDate = (TextView) findViewById(R.id.tvTestListDate);
+        tvTestListName = (TextView) findViewById(R.id.tvTestListName);
 
     }
 
