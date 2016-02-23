@@ -9,7 +9,6 @@
     <string name="title_section5">ตั้งค่า</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_profile">ผู้ใช้งาน</string>
     <string name="title_activity_test">แบบทดสอบ</string>
     <string name="test_code">Test Code KU0258</string>
     <string name="label_station">ฐานทดสอบ</string>
@@ -19,8 +18,8 @@
     <string name="toast_null_input">กรอกข้อมูลไม่ครบ</string>
     <string name="toast_send_seccess">ส่งสำเร็จ</string>
     <string name="title_activity_login">เข้าสู่ระบบ</string>
-    <string name="label_email">อีเมล</string>
-    <string name="label_password">รหัสผ่าน</string>
+    <string name="label_username">ชื่อผู้ใช้งาน</string>
+    <string name="label_testcode">รหัสแบบทดสอบ</string>
     <string name="label_login">เข้าสู่ระบบ</string>
     <string name="label_forgot_password"><u>ลืมรหัสผ่าน</u></string>
     <string name="label_register"><u>ลงทะเบียน</u></string>
@@ -32,4 +31,6 @@
     <string name="create_station">สร้างฐานการทดสอบ</string>
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
+    <string name="label_logout">ออกจากระบบ</string>
+    <string name="menu_testcode">แบบทดสอบ</string>
 </resources>

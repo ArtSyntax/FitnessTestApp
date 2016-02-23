@@ -3,18 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_profile"
-        android:title="@string/action_profile"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_test"
-        android:title="แบบทดสอบ"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_station"
-        android:title="ฐานทดสอบ"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_result"
-        android:title="ผลทดสอบ"
-        app:showAsAction="never"/>
+        android:title="@string/menu_testcode"
+        app:showAsAction="always"/>
 </menu>

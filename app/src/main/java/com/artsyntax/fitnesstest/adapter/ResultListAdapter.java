@@ -13,7 +13,7 @@ public class ResultListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 1000;
+        return 100;
     }
 
     @Override

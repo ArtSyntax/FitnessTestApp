@@ -6,61 +6,22 @@
     android:padding="@dimen/padding">
 
     <EditText
-        android:id="@+id/etUsername"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_height"
-        android:hint="@string/label_email"
-        android:imeOptions="actionNext"
-        android:inputType="textEmailAddress"
-        android:singleLine="true"
-        android:textSize="@dimen/label_size" />
-
-    <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
-        android:hint="@string/label_password"
+        android:hint="@string/label_testcode"
         android:imeOptions="actionGo"
         android:inputType="textPassword"
         android:textSize="@dimen/label_size" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/btLogin"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="@dimen/layout_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin"
+        android:text="@string/label_login"
+        android:textSize="@dimen/label_size" />
 
-        <Button
-            android:id="@+id/btLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@string/label_login"
-            android:textSize="@dimen/label_size" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_small"
-            android:text="@string/label_forgot_password"
-            android:textSize="@dimen/label_size" />
-
-        <TextView
-            android:id="@+id/tvRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_small"
-            android:text="@string/label_register"
-            android:textSize="@dimen/label_size" />
-    </LinearLayout>
 </LinearLayout>

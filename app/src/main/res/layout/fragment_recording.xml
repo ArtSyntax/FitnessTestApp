@@ -5,54 +5,36 @@
     android:orientation="vertical"
     android:padding="@dimen/padding">
 
-    <LinearLayout
+
+    <Button
+        android:id="@+id/btStation"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
-        android:orientation="horizontal">
+        android:gravity="left|center_vertical"
+        android:background="@android:color/transparent"
+        android:text="@string/label_station"
+        android:drawableRight="@drawable/ic_launcher"
+        android:textSize="@dimen/label_size" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:freezesText="true"
-            android:gravity="center_vertical"
-            android:text="@string/label_station"
-            android:textSize="@dimen/label_size" />
-    </LinearLayout>
-
-    <LinearLayout
+    <EditText
+        android:id="@+id/etID"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:hint="@string/label_id"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:textSize="@dimen/label_size" />
 
-        <EditText
-            android:id="@+id/etID"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:hint="@string/label_id"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            android:textSize="@dimen/label_size" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
+    <EditText
+        android:id="@+id/etScore"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/etScore"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:hint="@string/label_score"
-            android:imeOptions="actionGo"
-            android:inputType="numberDecimal"
-            android:textSize="@dimen/label_size" />
-
-    </LinearLayout>
+        android:gravity="center_vertical"
+        android:hint="@string/label_score"
+        android:imeOptions="actionGo"
+        android:inputType="numberDecimal"
+        android:textSize="@dimen/label_size" />
 
     <Button
         android:id="@+id/btSubmit"
@@ -62,15 +44,9 @@
         android:text="@string/button_send"
         android:textSize="@dimen/label_size" />
 
-    <!--<com.artsyntax.fitnesstest.view.ResultFeedCustomViewGroup-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:padding="@dimen/padding_small" />-->
-
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="match_parent"></ListView>
 
 </LinearLayout>

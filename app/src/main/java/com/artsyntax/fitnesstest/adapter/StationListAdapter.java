@@ -5,7 +5,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.artsyntax.fitnesstest.view.StationList;
-import com.artsyntax.fitnesstest.view.TestList;
 
 /**
  * Created by ArtSyntax on 17/2/2559.
@@ -14,7 +13,7 @@ public class StationListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 1000;
+        return 100;
     }
 
     @Override

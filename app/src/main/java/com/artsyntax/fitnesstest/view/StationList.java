@@ -50,7 +50,7 @@ public class StationList extends BaseCustomViewGroup {
 
     private void initInstances() {
         // findViewById here
-        tvStationListName = (TextView) findViewById(R.id.tvStationListName);
+        tvStationListName = (TextView) findViewById(R.id.btStationListName);
 
     }
 

@@ -18,14 +18,11 @@ import com.artsyntax.fitnesstest.fragment.LoginFragment;
 import com.artsyntax.fitnesstest.fragment.RecordingFragment;
 import com.artsyntax.fitnesstest.fragment.ResultFragment;
 import com.artsyntax.fitnesstest.fragment.StationFragment;
-import com.artsyntax.fitnesstest.fragment.TestFragment;
 
 import junit.framework.Test;
 
 public class MainActivity extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
-    ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
 
     @Override
@@ -46,22 +43,12 @@ public class MainActivity extends AppCompatActivity {
     private void initInstances() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(
-                MainActivity.this,
-                drawerLayout,
-                R.string.open_drawer,
-                R.string.close_drawer
-        );
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        actionBarDrawerToggle.syncState();
+
 
         if (savedInstanceState == null) {
             RecordingFragment fragment = (RecordingFragment) getSupportFragmentManager().findFragmentByTag("RecordingFragment");
@@ -72,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -85,55 +71,18 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentContainer);
 
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) //hamburger
-            return true;
-
-        else // menu
-            switch (item.getItemId()) {
-                case R.id.action_profile:
-                    if (fragment instanceof LoginFragment == false) {
-                        getSupportFragmentManager().beginTransaction()
-                                .setCustomAnimations(
-                                        R.anim.from_right, R.anim.to_left,
-                                        R.anim.from_left, R.anim.to_right
-                                )
-                                .replace(R.id.contentContainer, LoginFragment.newInstance())
-                                //.addToBackStack(null)
-                                .commit();
-                        //Toast.makeText(MainActivity.this, "Test OK", Toast.LENGTH_SHORT).show();
-                    }
-                    return true;
-
-                case R.id.action_test:
-                    if (fragment instanceof TestFragment == false) {
-                        getSupportFragmentManager().beginTransaction()
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .replace(R.id.contentContainer, TestFragment.newInstance())
-                               // .addToBackStack(null)
-                                .commit();
-                    }
-                    return true;
-
-                case R.id.action_station:
-                    if (fragment instanceof StationFragment == false) {
-                        getSupportFragmentManager().beginTransaction()
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .replace(R.id.contentContainer, StationFragment.newInstance())
-                                //.addToBackStack(null)
-                                .commit();
-                    }
-                    return true;
-
-                case R.id.action_result:
-                    if (fragment instanceof ResultFragment == false) {
-                        getSupportFragmentManager().beginTransaction()
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .replace(R.id.contentContainer, ResultFragment.newInstance())
-                                //.addToBackStack(null)
-                                .commit();
-                    }
-                    return true;
-            }
+        switch (item.getItemId()) {
+            case R.id.action_profile:
+                if (fragment instanceof LoginFragment == false) {
+                    getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .replace(R.id.contentContainer, LoginFragment.newInstance())
+                            .addToBackStack(null)
+                            .commit();
+                    //Toast.makeText(MainActivity.this, "Test OK", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
