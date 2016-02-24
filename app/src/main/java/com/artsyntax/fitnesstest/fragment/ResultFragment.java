@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.dao.PhotoItemCollectionDao;
+import com.artsyntax.fitnesstest.manager.ResultListManager;
 import com.artsyntax.fitnesstest.manager.http.HttpManager;
 
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class ResultFragment extends Fragment {
             public void onResponse(Call<PhotoItemCollectionDao> call, Response<PhotoItemCollectionDao> response) {
                 if (response.isSuccess()) {
                     PhotoItemCollectionDao dao = response.body();
-
+                    ResultListManager.getInstance().setDao(dao);
                     Toast.makeText(getActivity(),
                             dao.getData().get(0).getCaption(),
                             Toast.LENGTH_SHORT)

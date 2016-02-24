@@ -60,6 +60,22 @@ public class ResultList extends BaseCustomViewGroup {
 
     }
 
+    public void setTextID(String text) {
+        tvResultListID.setText(text);
+    }
+
+    public void setTextScore(String text) {
+        tvResultListScore.setText(text);
+    }
+
+    public void setTextStation(String text) {
+        tvResultListStation.setText(text);
+    }
+
+    public void setTextDate(String text) {
+        tvResultListDate.setText(text);
+    }
+
     private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         /*
         TypedArray a = getContext().getTheme().obtainStyledAttributes(

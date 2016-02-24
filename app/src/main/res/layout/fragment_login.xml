@@ -23,5 +23,13 @@
         android:text="@string/label_login"
         android:textSize="@dimen/label_size" />
 
+    <TextView
+        android:id="@+id/tvCurrentTestCode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="รหัสแบบทดสอบปัจจุบัน\nABCXYZ"
+        android:textSize="@dimen/label_size" />
+
 
 </LinearLayout>
