@@ -4,6 +4,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.artsyntax.fitnesstest.dao.StationDao;
+import com.artsyntax.fitnesstest.manager.StationListManager;
 import com.artsyntax.fitnesstest.view.StationList;
 
 /**
@@ -13,12 +15,16 @@ public class StationListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 100;
+        if (StationListManager.getInstance().getDao() == null)
+            return 0;
+        if (StationListManager.getInstance().getDao().getStations() == null)
+            return 0;
+        return StationListManager.getInstance().getDao().getStations().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return StationListManager.getInstance().getDao().getStations().get(position);
     }
 
     @Override
@@ -33,6 +39,9 @@ public class StationListAdapter extends BaseAdapter {
             item = (StationList) convertView;
         else
             item = new StationList(parent.getContext());
+
+        StationDao dao = (StationDao) getItem(position);
+        item.setTextStation(dao.getStationName());
         return item;
     }
 }

@@ -54,6 +54,10 @@ public class StationList extends BaseCustomViewGroup {
 
     }
 
+    public void setTextStation(String text) {
+        tvStationListName.setText(text);
+    }
+
     private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         /*
         TypedArray a = getContext().getTheme().obtainStyledAttributes(

@@ -1,10 +1,8 @@
 package com.artsyntax.fitnesstest.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.adapter.ResultListAdapter;
 import com.artsyntax.fitnesstest.dao.PhotoItemCollectionDao;
 import com.artsyntax.fitnesstest.manager.ResultListManager;
+import com.artsyntax.fitnesstest.manager.TestInfo;
 import com.artsyntax.fitnesstest.manager.http.HttpManager;
 
 import java.io.IOException;
@@ -41,6 +38,14 @@ public class RecordingFragment extends Fragment implements View.OnClickListener 
     Button btStation;
     ListView listView;
     ResultListAdapter listAdapter;
+    TestInfo testInfo;
+
+    public static RecordingFragment newInstance() {
+        RecordingFragment fragment = new RecordingFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public static RecordingFragment newInstance(int someVar){
         RecordingFragment fragment = new RecordingFragment();
@@ -86,10 +91,6 @@ public class RecordingFragment extends Fragment implements View.OnClickListener 
                     PhotoItemCollectionDao dao = response.body();
                     ResultListManager.getInstance().setDao(dao);
                     listAdapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(),
-                            dao.getData().get(0).getCaption(),
-                            Toast.LENGTH_SHORT)
-                            .show();
                 } else {              // 404 not found
                     try {
                         Toast.makeText(getActivity(),
@@ -138,4 +139,6 @@ public class RecordingFragment extends Fragment implements View.OnClickListener 
             Log.d("submit", "submit ok");
         }
     }
+
+
 }

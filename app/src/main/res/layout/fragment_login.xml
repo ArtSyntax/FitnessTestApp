@@ -6,12 +6,20 @@
     android:padding="@dimen/padding">
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etTestCode"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
         android:hint="@string/label_testcode"
         android:imeOptions="actionGo"
-        android:inputType="textPassword"
+        android:textSize="@dimen/label_size" />
+
+    <EditText
+        android:id="@+id/etServerIp"
+        android:text="158.108.34.49"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:hint="@string/serverip"
+        android:imeOptions="actionGo"
         android:textSize="@dimen/label_size" />
 
     <Button
@@ -28,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="รหัสแบบทดสอบปัจจุบัน\nABCXYZ"
+        android:text="กรอกรหัสแบบทดสอบ"
         android:textSize="@dimen/label_size" />
 
 

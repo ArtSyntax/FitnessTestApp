@@ -6,12 +6,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.adapter.StationListAdapter;
+import com.artsyntax.fitnesstest.dao.StationListDao;
+import com.artsyntax.fitnesstest.manager.StationListManager;
+import com.artsyntax.fitnesstest.manager.http.SQLManager;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
-public class StationFragment extends Fragment {
+public class StationFragment extends Fragment implements View.OnClickListener{
     ListView listView;
     StationListAdapter listAdapter;
 
@@ -38,6 +48,36 @@ public class StationFragment extends Fragment {
         listView = (ListView)rootView.findViewById(R.id.listView);
         listAdapter = new StationListAdapter();
         listView.setAdapter(listAdapter);
+
+        Call<StationListDao> call = SQLManager.getInstance().getStations().loadStationsList();
+        call.enqueue(new Callback<StationListDao>() {
+            @Override
+            public void onResponse(Call<StationListDao> call, Response<StationListDao> response) {
+                if (response.isSuccess()) {
+                    StationListDao dao = response.body();
+                    StationListManager.getInstance().setDao(dao);
+                    listAdapter.notifyDataSetChanged();
+                } else {              // 404 not found
+                    try {
+                        Toast.makeText(getActivity(),
+                                response.errorBody().string(),
+                                Toast.LENGTH_SHORT)
+                                .show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StationListDao> call, Throwable t) {     // cannot connect server
+
+                Toast.makeText(getActivity(),
+                        t.toString(),
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
     }
 
     @Override
@@ -68,5 +108,11 @@ public class StationFragment extends Fragment {
         if (savedInstanceState != null) {
             // Restore Instance State here
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        final Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.contentContainer);
+
     }
 }
