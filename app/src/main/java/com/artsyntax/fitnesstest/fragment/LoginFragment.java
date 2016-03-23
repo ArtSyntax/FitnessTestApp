@@ -45,6 +45,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
         initInstances(rootView);
         btLogin.setOnClickListener(this);
+        if (testInfo.getTestCode() != null)
+            tvCurrentTestCode.setText(testInfo.getTestName()+"\n ("+testInfo.getTestCode()+")");
         return rootView;
     }
 
@@ -92,7 +94,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         if (v == btLogin && etTestCode!=null) {
             testInfo.setTestCode(etTestCode.getText().toString());
             testInfo.setServerIp(etServerIp.getText().toString());
-            tvCurrentTestCode.setText(testInfo.getTestCode());
+            tvCurrentTestCode.setText(testInfo.getTestName()+" ("+testInfo.getTestCode()+")");
 
             etTestCode.setText(null);
 

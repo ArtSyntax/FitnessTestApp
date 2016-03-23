@@ -4,17 +4,21 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.artsyntax.fitnesstest.R;
+import com.artsyntax.fitnesstest.manager.TestInfo;
 import com.inthecheesefactory.thecheeselibrary.view.BaseCustomViewGroup;
 import com.inthecheesefactory.thecheeselibrary.view.state.BundleSavedState;
 
 
 public class StationList extends BaseCustomViewGroup {
 
-    private TextView tvStationListName;
+    private Button btStationListName;
 
     public StationList(Context context) {
         super(context);
@@ -50,12 +54,16 @@ public class StationList extends BaseCustomViewGroup {
 
     private void initInstances() {
         // findViewById here
-        tvStationListName = (TextView) findViewById(R.id.btStationListName);
+        btStationListName = (Button) findViewById(R.id.btStationListName);
 
     }
 
     public void setTextStation(String text) {
-        tvStationListName.setText(text);
+        btStationListName.setText(text);
+    }
+
+    public void setButtonClickListener(View.OnClickListener listener) {
+        btStationListName.setOnClickListener(listener);
     }
 
     private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -93,5 +101,7 @@ public class StationList extends BaseCustomViewGroup {
         Bundle bundle = ss.getBundle();
         // Restore State from bundle here
     }
+
+
 
 }

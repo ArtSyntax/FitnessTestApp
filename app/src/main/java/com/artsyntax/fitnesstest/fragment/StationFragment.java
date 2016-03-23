@@ -2,9 +2,12 @@ package com.artsyntax.fitnesstest.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -12,6 +15,7 @@ import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.adapter.StationListAdapter;
 import com.artsyntax.fitnesstest.dao.StationListDao;
 import com.artsyntax.fitnesstest.manager.StationListManager;
+import com.artsyntax.fitnesstest.manager.TestInfo;
 import com.artsyntax.fitnesstest.manager.http.SQLManager;
 
 import java.io.IOException;
@@ -21,9 +25,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class StationFragment extends Fragment implements View.OnClickListener{
+public class StationFragment extends Fragment {
     ListView listView;
     StationListAdapter listAdapter;
+    TestInfo testInfo;
+    StationListDao dao;
 
     public StationFragment() {
         super();
@@ -45,18 +51,21 @@ public class StationFragment extends Fragment implements View.OnClickListener{
 
     private void initInstances(View rootView) {
         // init instance with rootView.findViewById here
-        listView = (ListView)rootView.findViewById(R.id.listView);
+        listView = (ListView) rootView.findViewById(R.id.listView);
         listAdapter = new StationListAdapter();
         listView.setAdapter(listAdapter);
 
+        //Call<StationListDao> call = SQLManager.getInstance().getStations().loadStationsList(testInfo.getTestCode());
         Call<StationListDao> call = SQLManager.getInstance().getStations().loadStationsList();
         call.enqueue(new Callback<StationListDao>() {
             @Override
             public void onResponse(Call<StationListDao> call, Response<StationListDao> response) {
                 if (response.isSuccess()) {
-                    StationListDao dao = response.body();
+                    dao = response.body();
                     StationListManager.getInstance().setDao(dao);
                     listAdapter.notifyDataSetChanged();
+
+                    Log.d("station", "create");
                 } else {              // 404 not found
                     try {
                         Toast.makeText(getActivity(),
@@ -108,11 +117,5 @@ public class StationFragment extends Fragment implements View.OnClickListener{
         if (savedInstanceState != null) {
             // Restore Instance State here
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        final Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.contentContainer);
-
     }
 }

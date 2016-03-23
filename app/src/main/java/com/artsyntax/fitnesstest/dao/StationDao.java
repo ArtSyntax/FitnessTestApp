@@ -6,8 +6,17 @@ import com.google.gson.annotations.SerializedName;
  * Created by ArtSyntax on 21/3/2559.
  */
 public class StationDao {
+    @SerializedName("test_station_id")         private String testStationId;
     @SerializedName("station_name")         private String stationName;
     @SerializedName("station_unit")         private String stationUnit;
+
+    public String getTestStationId() {
+        return testStationId;
+    }
+
+    public void setTestStationId(String testStationId) {
+        this.testStationId = testStationId;
+    }
 
     public String getStationName() {
         return stationName;
