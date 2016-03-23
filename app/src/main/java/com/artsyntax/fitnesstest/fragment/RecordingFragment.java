@@ -4,12 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
@@ -28,7 +32,7 @@ import retrofit2.Response;
 /**
  * Created by ArtSyntax on 27/1/2559.
  */
-public class RecordingFragment extends Fragment implements View.OnClickListener {
+public class RecordingFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
     int someVar;
 
@@ -50,7 +54,7 @@ public class RecordingFragment extends Fragment implements View.OnClickListener 
     public static RecordingFragment newInstance(int someVar){
         RecordingFragment fragment = new RecordingFragment();
         Bundle args = new Bundle();
-        args.putInt("tag1",someVar);
+        args.putInt("tag1", someVar);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,6 +74,7 @@ public class RecordingFragment extends Fragment implements View.OnClickListener 
 
         btSubmit.setOnClickListener(this);
         btStation.setOnClickListener(this);
+        etScore.setOnEditorActionListener(this);
         return rootView;
     }
 
@@ -120,12 +125,24 @@ public class RecordingFragment extends Fragment implements View.OnClickListener 
     }
 
     @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        final Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.contentContainer);
+        if (actionId == EditorInfo.IME_ACTION_GO) {
+            Log.d("submit", "action go");
+            submitScore();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void onClick(View v) {
         Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.contentContainer);
         if (v == btSubmit) { // send score to server
-            Log.d("submit", "submit ok");
+            Log.d("submit", "button");
+            submitScore();
         }
-        if (v == btStation) { // send score to server
+        if (v == btStation) { // open station fragment
             if (fragment instanceof StationFragment == false) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(
@@ -140,5 +157,10 @@ public class RecordingFragment extends Fragment implements View.OnClickListener 
         }
     }
 
+    private void submitScore() {
+
+        // TODO send score to server
+
+    }
 
 }

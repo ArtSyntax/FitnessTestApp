@@ -18,12 +18,14 @@ import com.artsyntax.fitnesstest.fragment.LoginFragment;
 import com.artsyntax.fitnesstest.fragment.RecordingFragment;
 import com.artsyntax.fitnesstest.fragment.ResultFragment;
 import com.artsyntax.fitnesstest.fragment.StationFragment;
+import com.artsyntax.fitnesstest.manager.TestInfo;
 
 import junit.framework.Test;
 
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
+    TestInfo testInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private void initInstances() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        testInfo.setServerIp("158.108.34.49");
     }
 
     @Override

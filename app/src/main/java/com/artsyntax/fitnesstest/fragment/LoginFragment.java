@@ -2,10 +2,14 @@ package com.artsyntax.fitnesstest.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginFragment extends Fragment implements View.OnClickListener{
+public class LoginFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener{
     EditText etTestCode;
     EditText etServerIp;
     Button btLogin;
@@ -45,8 +49,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
         initInstances(rootView);
         btLogin.setOnClickListener(this);
+        etServerIp.setOnEditorActionListener(this);
         if (testInfo.getTestCode() != null)
             tvCurrentTestCode.setText(testInfo.getTestName()+"\n ("+testInfo.getTestCode()+")");
+        else
+            tvCurrentTestCode.setText(getResources().getString(R.string.input_test_code));
+        etServerIp.setText(testInfo.getServerIp());
         return rootView;
     }
 
@@ -88,55 +96,77 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             // Restore Instance State here
         }
     }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        final Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.contentContainer);
+        if (actionId == EditorInfo.IME_ACTION_GO) {
+            submitTestCode();
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void onClick(View v) {
         final Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.contentContainer);
         if (v == btLogin && etTestCode!=null) {
-            testInfo.setTestCode(etTestCode.getText().toString());
-            testInfo.setServerIp(etServerIp.getText().toString());
-            tvCurrentTestCode.setText(testInfo.getTestName()+" ("+testInfo.getTestCode()+")");
+            submitTestCode();
+        }
+    }
 
-            etTestCode.setText(null);
+    private void submitTestCode() {
+        testInfo.setTestCode(etTestCode.getText().toString());
+        testInfo.setServerIp(etServerIp.getText().toString());
+        tvCurrentTestCode.setText(testInfo.getTestName()+" ("+testInfo.getTestCode()+")");
 
-            Call<TestNameDao> call = SQLManager.getInstance().getCheckTestCode().checkTestCode();
-            call.enqueue(new Callback<TestNameDao>() {
-                @Override
-                public void onResponse(Call<TestNameDao> call, Response<TestNameDao> response) {
-                    if (response.isSuccess()) {
-                        TestNameDao dao = response.body();
+        etTestCode.setText(null);
 
-                        if (dao.getFound().toString().equals("1")){           // found testcode goto recording fragment
-                            testInfo.setTestName(dao.getTestName());
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.contentContainer, RecordingFragment.newInstance())
-                                    .commit();
-                            Toast.makeText(getActivity(),
-                                    testInfo.getTestName(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
+        Call<TestNameDao> call = SQLManager.getInstance().getCheckTestCode().checkTestCode();
+        call.enqueue(new Callback<TestNameDao>() {
+            @Override
+            public void onResponse(Call<TestNameDao> call, Response<TestNameDao> response) {
+                if (response.isSuccess()) {
+                    TestNameDao dao = response.body();
 
-                    } else {              // 404 not found
-                        try {
-                            Toast.makeText(getActivity(),
-                                    response.errorBody().string(),
-                                    Toast.LENGTH_SHORT)
-                                    .show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    if (dao.getFound().toString().equals("1")){           // found testcode goto recording fragment
+                        testInfo.setTestName(dao.getTestName());
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentContainer, RecordingFragment.newInstance())
+                                .commit();
+
+                        // clear all back stack fragment
+//                            FragmentManager fm = getActivity().getSupportFragmentManager();
+//                            for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+//                                fm.popBackStack();
+//                            }
+
+                        Toast.makeText(getActivity(),
+                                testInfo.getTestName(),
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+
+                } else {              // 404 not found
+                    try {
+                        Toast.makeText(getActivity(),
+                                response.errorBody().string(),
+                                Toast.LENGTH_SHORT)
+                                .show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(Call<TestNameDao> call, Throwable t) {     // cannot connect server
+            @Override
+            public void onFailure(Call<TestNameDao> call, Throwable t) {     // cannot connect server
 
-                    Toast.makeText(getActivity(),
-                            t.toString(),
-                            Toast.LENGTH_SHORT)
-                            .show();
-                }
-            });
-        }
+                Toast.makeText(getActivity(),
+                        t.toString(),
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
     }
 }

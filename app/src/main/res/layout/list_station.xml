@@ -23,15 +23,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/layout_height"
                 android:text="ชื่อฐานทดสอบ"
-                android:background="@android:color/background_light"
+                android:background="@drawable/selector_overlay"
                 android:textSize="@dimen/label_size" />
 
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/selector_overlay" />
-
 </RelativeLayout>

@@ -11,7 +11,9 @@ public class TestInfo {
     private static String serverIp;
     private static String testCode;
     private static String testName;
-    private static String currentStation;
+    private static String currentStationName;
+    private static String currentStationUnit;
+    private static String currentTestStationID;
     private static int userTagId;
     private static float userScore;
 
@@ -52,12 +54,28 @@ public class TestInfo {
         TestInfo.testName = testName;
     }
 
-    public static String getCurrentStation() {
-        return currentStation;
+    public static String getCurrentStationName() {
+        return currentStationName;
     }
 
-    public static void setCurrentStation(String currentStation) {
-        TestInfo.currentStation = currentStation;
+    public static void setCurrentStationName(String currentStationName) {
+        TestInfo.currentStationName = currentStationName;
+    }
+
+    public static String getCurrentStationUnit() {
+        return currentStationUnit;
+    }
+
+    public static void setCurrentStationUnit(String currentStationUnit) {
+        TestInfo.currentStationUnit = currentStationUnit;
+    }
+
+    public static String getCurrentTestStationID() {
+        return currentTestStationID;
+    }
+
+    public static void setCurrentTestStationID(String currentTestStationID) {
+        TestInfo.currentTestStationID = currentTestStationID;
     }
 
     public static int getUserTagId() {

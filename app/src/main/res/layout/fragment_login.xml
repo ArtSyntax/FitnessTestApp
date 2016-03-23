@@ -7,19 +7,22 @@
 
     <EditText
         android:id="@+id/etTestCode"
+        android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
         android:hint="@string/label_testcode"
-        android:imeOptions="actionGo"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
         android:textSize="@dimen/label_size" />
 
     <EditText
         android:id="@+id/etServerIp"
-        android:text="158.108.34.49"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
         android:hint="@string/serverip"
         android:imeOptions="actionGo"
+        android:singleLine="true"
+        android:text="158.108.34.49"
         android:textSize="@dimen/label_size" />
 
     <Button
@@ -36,8 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="กรอกรหัสแบบทดสอบ"
+        android:text="@string/input_test_code"
         android:textSize="@dimen/label_size" />
-
 
 </LinearLayout>

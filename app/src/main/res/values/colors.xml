@@ -7,6 +7,6 @@
     <color name="colorButtonDark">#FF9100</color>
     <color name="colorFeed">#26A69A</color>
     <color name="white">#FFFFFF</color>
-    <color name="overlay_color">#80000000</color>
+    <color name="overlay_color">#d9d9d9</color>
     <color name="transparent">#00000000</color>
 </resources>

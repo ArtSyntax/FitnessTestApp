@@ -34,4 +34,5 @@
     <string name="label_logout">ออกจากระบบ</string>
     <string name="menu_testcode">แบบทดสอบ</string>
     <string name="serverip">หมายเลขไอพีของเซิฟเวอร์</string>
+    <string name="input_test_code">กรอกรหัสแบบทดสอบ</string>
 </resources>
