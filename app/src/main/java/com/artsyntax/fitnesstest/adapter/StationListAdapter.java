@@ -1,9 +1,6 @@
 package com.artsyntax.fitnesstest.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +12,8 @@ import com.artsyntax.fitnesstest.activity.MainActivity;
 import com.artsyntax.fitnesstest.dao.StationDao;
 import com.artsyntax.fitnesstest.fragment.RecordingFragment;
 import com.artsyntax.fitnesstest.manager.StationListManager;
-import com.artsyntax.fitnesstest.manager.TestInfo;
+import com.artsyntax.fitnesstest.utils.TestInfo;
 import com.artsyntax.fitnesstest.view.StationList;
-import com.inthecheesefactory.thecheeselibrary.view.BaseCustomViewGroup;
 
 /**
  * Created by ArtSyntax on 17/2/2559.
@@ -63,12 +59,22 @@ public class StationListAdapter extends BaseAdapter {
                 testInfo.setCurrentStationName(dao.getStationName());
                 testInfo.setCurrentStationUnit(dao.getStationUnit());
                 testInfo.setCurrentTestStationID(dao.getTestStationId());
+                float tmpMin = Math.min(Float.valueOf(dao.getLowScoreBound()), Float.valueOf(dao.getHighScoreBound())) * 2;
+                float tmpMax = Math.max(Float.valueOf(dao.getLowScoreBound()), Float.valueOf(dao.getHighScoreBound())) * 2;
+                if (tmpMin < tmpMax) {
+                    testInfo.setLowScoreBound(tmpMin);
+                    testInfo.setHighScoreBound(tmpMax);
+                } else {
+                    testInfo.setLowScoreBound(tmpMax);
+                    testInfo.setHighScoreBound(tmpMin);
+                }
+
                 Toast.makeText(v.getContext(),
-                        "ฐานทดสอบ : "+ testInfo.getCurrentStationName(),
+                        "ฐานทดสอบ : " + testInfo.getCurrentStationName(),
                         Toast.LENGTH_SHORT)
                         .show();
 
-                ((MainActivity)v.getContext()).getSupportFragmentManager().beginTransaction()
+                ((MainActivity) v.getContext()).getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(
                                 R.anim.from_left, R.anim.to_right,
                                 R.anim.from_right, R.anim.to_left

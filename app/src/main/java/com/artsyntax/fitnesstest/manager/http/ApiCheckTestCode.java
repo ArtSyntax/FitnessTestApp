@@ -2,11 +2,9 @@ package com.artsyntax.fitnesstest.manager.http;
 
 
 import com.artsyntax.fitnesstest.dao.TestNameDao;
-import com.artsyntax.fitnesstest.manager.TestInfo;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**

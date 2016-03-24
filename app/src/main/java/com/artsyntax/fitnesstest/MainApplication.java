@@ -2,7 +2,6 @@ package com.artsyntax.fitnesstest;
 
 import android.app.Application;
 
-import com.artsyntax.fitnesstest.manager.TestInfo;
 import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 
 /**

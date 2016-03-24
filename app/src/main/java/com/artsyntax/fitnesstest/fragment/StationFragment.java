@@ -6,8 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,7 +14,7 @@ import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.adapter.StationListAdapter;
 import com.artsyntax.fitnesstest.dao.StationListDao;
 import com.artsyntax.fitnesstest.manager.StationListManager;
-import com.artsyntax.fitnesstest.manager.TestInfo;
+import com.artsyntax.fitnesstest.utils.TestInfo;
 import com.artsyntax.fitnesstest.manager.http.SQLManager;
 
 import java.io.IOException;
@@ -67,10 +66,14 @@ public class StationFragment extends Fragment {
                     Log.d("station", "create");
                 } else {              // 404 not found
                     try {
+//                        getActivity().getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.contentContainer, LoginFragment.newInstance())
+//                                .commit();
                         Toast.makeText(getActivity(),
-                                response.errorBody().string(),
+                                "เชื่อมต่อใหม่อีกครั้ง",
                                 Toast.LENGTH_SHORT)
                                 .show();
+                        Log.d("Error! 404 Not found: ", response.errorBody().string());      // error message
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -79,15 +82,23 @@ public class StationFragment extends Fragment {
 
             @Override
             public void onFailure(Call<StationListDao> call, Throwable t) {     // cannot connect server
-
+                hiddenKeyboard(getView());
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.contentContainer, LoginFragment.newInstance())
+//                        .commit();
                 Toast.makeText(getActivity(),
-                        t.toString(),
+                        "เชื่อมต่อใหม่อีกครั้ง",
                         Toast.LENGTH_SHORT)
                         .show();
+                Log.d("Error! no server: ", t.toString());         // error message
             }
         });
     }
 
+    private void hiddenKeyboard(View v) {
+        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(v.getContext().INPUT_METHOD_SERVICE);
+        keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
     @Override
     public void onStart() {
         super.onStart();

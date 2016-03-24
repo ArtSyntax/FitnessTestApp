@@ -3,7 +3,7 @@ package com.artsyntax.fitnesstest.manager.http;
 import android.content.Context;
 import android.util.Log;
 
-import com.artsyntax.fitnesstest.manager.TestInfo;
+import com.artsyntax.fitnesstest.utils.TestInfo;
 import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 
 import retrofit2.Retrofit;

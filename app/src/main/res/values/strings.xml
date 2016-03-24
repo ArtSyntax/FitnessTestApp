@@ -35,4 +35,6 @@
     <string name="menu_testcode">แบบทดสอบ</string>
     <string name="serverip">หมายเลขไอพีของเซิฟเวอร์</string>
     <string name="input_test_code">กรอกรหัสแบบทดสอบ</string>
+    <string name="default_ip">158.108.34.49</string>
+
 </resources>

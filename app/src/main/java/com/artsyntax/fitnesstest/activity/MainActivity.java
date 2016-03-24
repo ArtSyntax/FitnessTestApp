@@ -1,11 +1,8 @@
 package com.artsyntax.fitnesstest.activity;
 
-import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,16 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.fragment.LoginFragment;
 import com.artsyntax.fitnesstest.fragment.RecordingFragment;
-import com.artsyntax.fitnesstest.fragment.ResultFragment;
-import com.artsyntax.fitnesstest.fragment.StationFragment;
-import com.artsyntax.fitnesstest.manager.TestInfo;
-
-import junit.framework.Test;
+import com.artsyntax.fitnesstest.utils.TestInfo;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private void initInstances() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        testInfo.setServerIp("158.108.34.49");
+        testInfo.setServerIp(getResources().getString(R.string.default_ip));
     }
 
     @Override

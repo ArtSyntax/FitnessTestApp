@@ -20,7 +20,7 @@ import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.adapter.ResultListAdapter;
 import com.artsyntax.fitnesstest.dao.PhotoItemCollectionDao;
 import com.artsyntax.fitnesstest.manager.ResultListManager;
-import com.artsyntax.fitnesstest.manager.TestInfo;
+import com.artsyntax.fitnesstest.utils.TestInfo;
 import com.artsyntax.fitnesstest.manager.http.HttpManager;
 
 import java.io.IOException;
@@ -172,7 +172,37 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
     private void submitScore() {
 
         // TODO send score to server
+        validateInput();
 
+    }
+
+    private boolean validateInput() {
+        if (testInfo.getCurrentTestStationID()==null){
+            Toast.makeText(getActivity(),
+                    "กรุณาเลือกฐานการทดสอบ",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (etID.length()<1){
+            etID.setFocusableInTouchMode(true);
+            etID.requestFocus();
+            Toast.makeText(getActivity(),
+                    "ระบุหมายเลขผู้ทดสอบผิดพลาด",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (etScore.length()<1){
+            etScore.setFocusableInTouchMode(true);
+            etScore.requestFocus();
+            Toast.makeText(getActivity(),
+                    "ระบุคะแนนผิดพลาด",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // TODO: case invalid score bound -> input score again
+
+        return true;
     }
 
 }

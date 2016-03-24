@@ -2,13 +2,11 @@ package com.artsyntax.fitnesstest.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,10 +16,11 @@ import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.dao.TestNameDao;
-import com.artsyntax.fitnesstest.manager.TestInfo;
+import com.artsyntax.fitnesstest.utils.TestInfo;
 import com.artsyntax.fitnesstest.manager.http.SQLManager;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +32,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
     Button btLogin;
     TextView tvCurrentTestCode;
     TestInfo testInfo;
+    //private Toast toast;
+    private ArrayList<Toast> toast = new ArrayList<Toast>();
 
     public LoginFragment() {
         super();
@@ -105,8 +106,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        final Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.contentContainer);
-        if (actionId == EditorInfo.IME_ACTION_GO) {
+        //final Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.contentContainer);
+        if (validateInput() && actionId == EditorInfo.IME_ACTION_GO) {
             submitTestCode();
             return true;
         }
@@ -115,24 +116,54 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
 
     @Override
     public void onClick(View v) {
-        final Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.contentContainer);
-        if (etTestCode.length()<6){
-            etTestCode.setFocusableInTouchMode(true);
-            etTestCode.requestFocus();
-            Toast.makeText(getActivity(),
-                    "Invalid Testcode",
-                    Toast.LENGTH_SHORT).show();
-        }
-        else if (etServerIp.length()<7){
-            etServerIp.setFocusableInTouchMode(true);
-            etServerIp.requestFocus();
-            Toast.makeText(getActivity(),
-                    "Invalid Server IP",
-                    Toast.LENGTH_SHORT).show();
-        }
-        else if (v == btLogin) {
+        if (validateInput() && v == btLogin) {
             submitTestCode();
         }
+    }
+
+    private boolean validateInput() {
+        testInfo.setTestCode(etTestCode.getText().toString());
+        testInfo.setServerIp(etServerIp.getText().toString());
+
+        clearToast();
+        for(int i=0;i<10;i++) {     // toast LENGTH.LONG x10 time
+            makeToast("กำลังเชื่อมต่อ...");
+        }
+
+        if (etTestCode.length() < 6) {
+            etTestCode.setFocusableInTouchMode(true);
+            etTestCode.requestFocus();
+            tvCurrentTestCode.setText(getResources().getString(R.string.input_test_code));
+            clearToast();
+            makeToast("รหัสแบบทดสอบผิดพลาด");
+            return false;
+        }
+        else if (etServerIp.length() < 7) {
+            etServerIp.setFocusableInTouchMode(true);
+            etServerIp.requestFocus();
+            tvCurrentTestCode.setText(getResources().getString(R.string.input_test_code));
+            clearToast();
+            makeToast("หมายเลขไอพีผิดพลาด");
+            return false;
+        }
+        return true;
+    }
+
+    private void makeToast(String text){
+        Toast t = Toast.makeText(getActivity(),
+                text,
+                Toast.LENGTH_LONG);
+        t.show();
+        toast.add(t);
+    }
+
+    private void clearToast() {
+        for(Toast t:toast){
+            if(t!=null) {
+                t.cancel();
+            }
+        }
+        toast.clear();
     }
 
     private void hiddenKeyboard(View v) {
@@ -141,12 +172,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
     }
 
     private void submitTestCode() {
-        testInfo.setTestCode(etTestCode.getText().toString());
-        testInfo.setServerIp(etServerIp.getText().toString());
-
         Log.d("station","IP : "+testInfo.getServerIp()+ " Testcode : "+testInfo.getTestCode());
-
-
         Call<TestNameDao> call = SQLManager.getInstance().getCheckTestCode().checkTestCode(testInfo.getTestCode());
         call.enqueue(new Callback<TestNameDao>() {
             @Override
@@ -155,12 +181,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
                     TestNameDao dao = response.body();
 
                     if (dao.getFound().toString().equals("1")){           // found testcode goto recording fragment
+                        testInfo.clear();
+                        testInfo.setTestCode(etTestCode.getText().toString());
+                        testInfo.setServerIp(etServerIp.getText().toString());
                         testInfo.setTestName(dao.getTestName());
-                        tvCurrentTestCode.setText(testInfo.getTestName() + " (" + testInfo.getTestCode() + ")");
                         hiddenKeyboard(getView());
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.contentContainer, RecordingFragment.newInstance())
                                 .commit();
+                        tvCurrentTestCode.setText(testInfo.getTestName() + " (" + testInfo.getTestCode() + ")");
 
                         // clear all back stack fragment
 //                        FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -168,27 +197,26 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
 //                            fm.popBackStack();
 //                        }
 
-                        Toast.makeText(getActivity(),
-                                testInfo.getTestName(),
-                                Toast.LENGTH_LONG)
-                                .show();
+                        clearToast();
+                        makeToast(testInfo.getTestName());
                     }
                     else{
                         etTestCode.setFocusableInTouchMode(true);
                         etTestCode.requestFocus();
-                        Toast.makeText(getActivity(),
-                                "Not Found Testcode",
-                                Toast.LENGTH_SHORT).show();
+                        etTestCode.setText(null);
+                        tvCurrentTestCode.setText(getResources().getString(R.string.input_test_code));
+                        clearToast();
+                        makeToast("ไม่พบรหัสแบบทดสอบ");
                     }
 
                 } else {              // 404 not found
                     try {
+                        etTestCode.setFocusableInTouchMode(true);
+                        etTestCode.requestFocus();
                         etTestCode.setText(null);
-
-                        Toast.makeText(getActivity(),
-                                "Not Found Testcode!",
-                                Toast.LENGTH_SHORT)
-                                .show();
+                        tvCurrentTestCode.setText(getResources().getString(R.string.input_test_code));
+                        clearToast();
+                        makeToast("ไม่พบรหัสแบบทดสอบ");
                         Log.d("Error! 404 Not found: ",response.errorBody().string());      // error message
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -198,11 +226,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
 
             @Override
             public void onFailure(Call<TestNameDao> call, Throwable t) {     // cannot connect server
-
-                Toast.makeText(getActivity(),
-                        "Cannot connect the server!",                     // print t.toString() for error message
-                        Toast.LENGTH_SHORT)
-                        .show();
+                etServerIp.setFocusableInTouchMode(true);
+                etServerIp.requestFocus();
+                etServerIp.setText(getResources().getString(R.string.default_ip));
+                clearToast();
+                makeToast("ไม่พบเซิฟเวอร์");
+                Log.d("Error! no server: ", t.toString() );         // error message
             }
         });
     }

@@ -7,7 +7,7 @@
 
     <EditText
         android:id="@+id/etTestCode"
-        android:inputType="textEmailAddress"
+        android:inputType="textEmailAddress|textCapCharacters"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
         android:hint="@string/label_testcode"

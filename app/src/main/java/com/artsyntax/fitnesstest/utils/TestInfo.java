@@ -1,7 +1,8 @@
-package com.artsyntax.fitnesstest.manager;
+package com.artsyntax.fitnesstest.utils;
 
 import android.content.Context;
 
+import com.artsyntax.fitnesstest.R;
 import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 
 
@@ -14,8 +15,10 @@ public class TestInfo {
     private static String currentStationName;
     private static String currentStationUnit;
     private static String currentTestStationID;
-    private static int userTagId;
+    private static String userTagId;
     private static float userScore;
+    private static float lowScoreBound;
+    private static float highScoreBound;
 
     public static TestInfo getInstance() {
         if (instance == null)
@@ -29,6 +32,18 @@ public class TestInfo {
         mContext = Contextor.getInstance().getContext();
     }
 
+    public static void clear(){
+        setServerIp(Contextor.getInstance().getContext().getResources().getString(R.string.default_ip));
+        setTestCode(null);
+        setTestName(null);
+        setCurrentStationName(null);
+        setCurrentStationUnit(null);
+        setCurrentTestStationID(null);
+        setUserTagId(null);
+        setUserScore(0);
+        setLowScoreBound(0);
+        setHighScoreBound(0);
+    }
 
     public static String getServerIp() {
         return serverIp;
@@ -78,11 +93,27 @@ public class TestInfo {
         TestInfo.currentTestStationID = currentTestStationID;
     }
 
-    public static int getUserTagId() {
+    public static float getHighScoreBound() {
+        return highScoreBound;
+    }
+
+    public static void setHighScoreBound(float highScoreBound) {
+        TestInfo.highScoreBound = highScoreBound;
+    }
+
+    public static float getLowScoreBound() {
+        return lowScoreBound;
+    }
+
+    public static void setLowScoreBound(float lowScoreBound) {
+        TestInfo.lowScoreBound = lowScoreBound;
+    }
+
+    public static String getUserTagId() {
         return userTagId;
     }
 
-    public static void setUserTagId(int userTagId) {
+    public static void setUserTagId(String userTagId) {
         TestInfo.userTagId = userTagId;
     }
 
