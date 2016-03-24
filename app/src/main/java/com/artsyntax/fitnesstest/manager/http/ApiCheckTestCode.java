@@ -5,13 +5,14 @@ import com.artsyntax.fitnesstest.dao.TestNameDao;
 import com.artsyntax.fitnesstest.manager.TestInfo;
 
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by ArtSyntax on 20/3/2559.
  */
 public interface ApiCheckTestCode {
-    TestInfo testInfo = null;
-    @POST("checktestcode.php?testcode=ABCXYZ") //base url
-    Call<TestNameDao> checkTestCode();
+    @GET("checktestcode.php") //base url
+    Call<TestNameDao> checkTestCode(@Query("testcode") String surrentTestcode);
 }

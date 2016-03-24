@@ -1,5 +1,6 @@
 package com.artsyntax.fitnesstest.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -66,10 +67,14 @@ public class StationListAdapter extends BaseAdapter {
                         "ฐานทดสอบ : "+ testInfo.getCurrentStationName(),
                         Toast.LENGTH_SHORT)
                         .show();
-//
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.contentContainer, RecordingFragment.newInstance())
-//                        .commit();
+
+                ((MainActivity)v.getContext()).getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.from_left, R.anim.to_right,
+                                R.anim.from_right, R.anim.to_left
+                        )
+                        .replace(R.id.contentContainer, RecordingFragment.newInstance())
+                        .commit();
             }
         });
         return item;

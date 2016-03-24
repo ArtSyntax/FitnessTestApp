@@ -70,12 +70,23 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recording, container, false);
+        hiddenKeyboard(rootView);
         initInstances(rootView);
+        if (testInfo.getCurrentTestStationID() != null){
+            btStation.setText(testInfo.getCurrentStationName());
+            etScore.setHint(getResources().getString(R.string.label_score)+ " ("+testInfo.getCurrentStationUnit()+")");
+        }
 
         btSubmit.setOnClickListener(this);
         btStation.setOnClickListener(this);
         etScore.setOnEditorActionListener(this);
+
         return rootView;
+    }
+
+    private void hiddenKeyboard(View v) {
+        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(v.getContext().INPUT_METHOD_SERVICE);
+        keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     private void initInstances(View rootView) {
@@ -144,6 +155,7 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
         }
         if (v == btStation) { // open station fragment
             if (fragment instanceof StationFragment == false) {
+                hiddenKeyboard(v);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(
                                 R.anim.from_right, R.anim.to_left,

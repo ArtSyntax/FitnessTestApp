@@ -54,9 +54,8 @@ public class StationFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.listView);
         listAdapter = new StationListAdapter();
         listView.setAdapter(listAdapter);
-
-        //Call<StationListDao> call = SQLManager.getInstance().getStations().loadStationsList(testInfo.getTestCode());
-        Call<StationListDao> call = SQLManager.getInstance().getStations().loadStationsList();
+        Log.d("station","testcode : "+testInfo.getTestCode());
+        Call<StationListDao> call = SQLManager.getInstance().getStations().loadStationsList(testInfo.getTestCode());
         call.enqueue(new Callback<StationListDao>() {
             @Override
             public void onResponse(Call<StationListDao> call, Response<StationListDao> response) {

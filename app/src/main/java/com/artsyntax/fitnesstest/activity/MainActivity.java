@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_profile:
                 if (fragment instanceof LoginFragment == false) {
+                    hiddenKeyboard(findViewById(R.id.toolbar));
                     getSupportFragmentManager().beginTransaction()
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .replace(R.id.contentContainer, LoginFragment.newInstance())
@@ -88,5 +91,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hiddenKeyboard(View v) {
+        InputMethodManager keyboard = (InputMethodManager) getSystemService(v.getContext().INPUT_METHOD_SERVICE);
+        keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }
