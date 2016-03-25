@@ -73,14 +73,7 @@ public class StationListAdapter extends BaseAdapter {
                         "ฐานทดสอบ : " + testInfo.getCurrentStationName(),
                         Toast.LENGTH_SHORT)
                         .show();
-
-                ((MainActivity) v.getContext()).getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.from_left, R.anim.to_right,
-                                R.anim.from_right, R.anim.to_left
-                        )
-                        .replace(R.id.contentContainer, RecordingFragment.newInstance())
-                        .commit();
+                ((MainActivity) v.getContext()).getSupportFragmentManager().popBackStack();
             }
         });
         return item;

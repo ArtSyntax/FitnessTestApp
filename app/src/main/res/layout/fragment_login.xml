@@ -7,11 +7,11 @@
 
     <EditText
         android:id="@+id/etTestCode"
-        android:inputType="textEmailAddress|textCapCharacters"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height"
         android:hint="@string/label_testcode"
         android:imeOptions="actionNext"
+        android:inputType="textEmailAddress|textCapCharacters"
         android:singleLine="true"
         android:textSize="@dimen/label_size" />
 
@@ -21,6 +21,7 @@
         android:layout_height="@dimen/layout_height"
         android:hint="@string/serverip"
         android:imeOptions="actionGo"
+        android:inputType="textEmailAddress"
         android:singleLine="true"
         android:text="158.108.34.49"
         android:textSize="@dimen/label_size" />
@@ -37,9 +38,18 @@
     <TextView
         android:id="@+id/tvCurrentTestCode"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="@string/input_test_code"
+        android:textSize="@dimen/label_size" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:gravity="center"
+        android:text="@string/version"
+        android:textStyle="italic"
         android:textSize="@dimen/label_size" />
 
 </LinearLayout>

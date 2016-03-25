@@ -2,6 +2,8 @@ package com.artsyntax.fitnesstest.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -55,7 +57,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
         etServerIp.setOnEditorActionListener(this);
         etTestCode.setText(testInfo.getTestCode());
         etServerIp.setText(testInfo.getServerIp());
-        if (testInfo.getTestCode() != null) {
+        if (testInfo.getTestName() != null) {
             tvCurrentTestCode.setText(testInfo.getTestName()+"\n ("+testInfo.getTestCode()+")");
             etTestCode.setText(testInfo.getTestCode());
         }
@@ -124,27 +126,31 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
     private boolean validateInput() {
         testInfo.setTestCode(etTestCode.getText().toString());
         testInfo.setServerIp(etServerIp.getText().toString());
-
-        clearToast();
-        for(int i=0;i<10;i++) {     // toast LENGTH.LONG x10 time
-            makeToast("กำลังเชื่อมต่อ...");
-        }
+        tvCurrentTestCode.setText(getResources().getString(R.string.input_test_code));
 
         if (etTestCode.length() < 6) {
-            etTestCode.setFocusableInTouchMode(true);
-            etTestCode.requestFocus();
-            tvCurrentTestCode.setText(getResources().getString(R.string.input_test_code));
             clearToast();
             makeToast("รหัสแบบทดสอบผิดพลาด");
+            testInfo.setTestCode(null);
+            etTestCode.setText(null);
+            etTestCode.setFocusableInTouchMode(true);
+            etTestCode.requestFocus();
             return false;
         }
         else if (etServerIp.length() < 7) {
+            clearToast();
+            makeToast("หมายเลขไอพีผิดพลาด\n" +
+                    "เปลี่ยนกลับเป็นค่าเริ่มต้น");
+            etServerIp.setText(getResources().getString(R.string.default_ip));
             etServerIp.setFocusableInTouchMode(true);
             etServerIp.requestFocus();
-            tvCurrentTestCode.setText(getResources().getString(R.string.input_test_code));
-            clearToast();
-            makeToast("หมายเลขไอพีผิดพลาด");
             return false;
+        }
+        else{
+            clearToast();
+            for(int i=0;i<10;i++) {     // toast LENGTH.LONG x10 time
+                makeToast("กำลังเชื่อมต่อ...");
+            }
         }
         return true;
     }
@@ -171,8 +177,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
         keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
+
     private void submitTestCode() {
-        Log.d("station","IP : "+testInfo.getServerIp()+ " Testcode : "+testInfo.getTestCode());
+        Log.d("station", "IP : " + testInfo.getServerIp() + " Testcode : " + testInfo.getTestCode());
+        testInfo.clear();
+        testInfo.setTestCode(etTestCode.getText().toString());
+        testInfo.setServerIp(etServerIp.getText().toString());
         Call<TestNameDao> call = SQLManager.getInstance().getCheckTestCode().checkTestCode(testInfo.getTestCode());
         call.enqueue(new Callback<TestNameDao>() {
             @Override
@@ -181,26 +191,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
                     TestNameDao dao = response.body();
 
                     if (dao.getFound().toString().equals("1")){           // found testcode goto recording fragment
-                        testInfo.clear();
-                        testInfo.setTestCode(etTestCode.getText().toString());
-                        testInfo.setServerIp(etServerIp.getText().toString());
                         testInfo.setTestName(dao.getTestName());
                         hiddenKeyboard(getView());
                         getActivity().getSupportFragmentManager().beginTransaction()
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .replace(R.id.contentContainer, RecordingFragment.newInstance())
                                 .commit();
                         tvCurrentTestCode.setText(testInfo.getTestName() + " (" + testInfo.getTestCode() + ")");
-
-                        // clear all back stack fragment
-//                        FragmentManager fm = getActivity().getSupportFragmentManager();
-//                        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-//                            fm.popBackStack();
-//                        }
-
                         clearToast();
                         makeToast(testInfo.getTestName());
                     }
-                    else{
+                    else{                                                   // test code not found
                         etTestCode.setFocusableInTouchMode(true);
                         etTestCode.requestFocus();
                         etTestCode.setText(null);
@@ -209,7 +210,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
                         makeToast("ไม่พบรหัสแบบทดสอบ");
                     }
 
-                } else {              // 404 not found
+                } else {                                                    // 404 not found
                     try {
                         etTestCode.setFocusableInTouchMode(true);
                         etTestCode.requestFocus();
@@ -230,8 +231,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
                 etServerIp.requestFocus();
                 etServerIp.setText(getResources().getString(R.string.default_ip));
                 clearToast();
-                makeToast("ไม่พบเซิฟเวอร์");
-                Log.d("Error! no server: ", t.toString() );         // error message
+                makeToast("ไม่พบเซิฟเวอร์\n" +
+                        "เปลี่ยนกลับเป็นค่าเริ่มต้น");
+                Log.d("Error! no server: ", t.toString());         // error message
             }
         });
     }

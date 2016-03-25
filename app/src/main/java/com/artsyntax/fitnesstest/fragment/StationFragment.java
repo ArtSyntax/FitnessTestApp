@@ -66,9 +66,6 @@ public class StationFragment extends Fragment {
                     Log.d("station", "create");
                 } else {              // 404 not found
                     try {
-//                        getActivity().getSupportFragmentManager().beginTransaction()
-//                                .replace(R.id.contentContainer, LoginFragment.newInstance())
-//                                .commit();
                         Toast.makeText(getActivity(),
                                 "เชื่อมต่อใหม่อีกครั้ง",
                                 Toast.LENGTH_SHORT)
@@ -83,11 +80,8 @@ public class StationFragment extends Fragment {
             @Override
             public void onFailure(Call<StationListDao> call, Throwable t) {     // cannot connect server
                 hiddenKeyboard(getView());
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.contentContainer, LoginFragment.newInstance())
-//                        .commit();
                 Toast.makeText(getActivity(),
-                        "เชื่อมต่อใหม่อีกครั้ง",
+                        "กรุณาเชื่อมต่อใหม่",
                         Toast.LENGTH_SHORT)
                         .show();
                 Log.d("Error! no server: ", t.toString());         // error message

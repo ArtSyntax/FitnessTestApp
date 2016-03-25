@@ -2,14 +2,18 @@ package com.artsyntax.fitnesstest.activity;
 
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.fragment.LoginFragment;
@@ -27,12 +31,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initInstances();
-
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && testInfo.getTestName()==null) {
             // create fragment on activity
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentContainer, RecordingFragment.newInstance(123), "RecordingFragment") //optional
+                    .add(R.id.contentContainer, LoginFragment.newInstance())
                     .commit();
+        }
+        else if (savedInstanceState == null && testInfo.getTestName()!=null) {
+            // create fragment on activity
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.contentContainer, RecordingFragment.newInstance())
+                    .commit();
+            Toast.makeText(this,
+                    testInfo.getTestName(),
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -48,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (savedInstanceState == null) {
-            RecordingFragment fragment = (RecordingFragment) getSupportFragmentManager().findFragmentByTag("RecordingFragment");
-            fragment.setEditText(null);
+            LoginFragment fragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag("LoginFragment");
         }
     }
 
@@ -71,13 +82,13 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_profile:
                 if (fragment instanceof LoginFragment == false) {
+                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     hiddenKeyboard(findViewById(R.id.toolbar));
                     getSupportFragmentManager().beginTransaction()
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .replace(R.id.contentContainer, LoginFragment.newInstance())
                             .addToBackStack(null)
                             .commit();
-                    //Toast.makeText(MainActivity.this, "Test OK", Toast.LENGTH_SHORT).show();
                 }
                 return true;
         }
