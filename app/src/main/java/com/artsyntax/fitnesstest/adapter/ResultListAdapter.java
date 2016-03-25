@@ -29,7 +29,7 @@ public class ResultListAdapter extends BaseAdapter {
 //        if (StationListManager.getInstance().getDao().getStations() == null)
 //            return 0;
 //        return StationListManager.getInstance().getDao().getStations().size();
-        return 2;
+        return 1;
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -18,7 +19,11 @@ import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.adapter.ResultListAdapter;
+import com.artsyntax.fitnesstest.dao.ResultDao;
+import com.artsyntax.fitnesstest.manager.ResultListManager;
 import com.artsyntax.fitnesstest.utils.TestInfo;
+import com.artsyntax.fitnesstest.view.ResultList;
+
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -39,6 +44,7 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
     ListView listView;
     ResultListAdapter listAdapter;
     TestInfo testInfo;
+    ResultDao dao;
 
     public static RecordingFragment newInstance() {
         RecordingFragment fragment = new RecordingFragment();
@@ -91,8 +97,8 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
         btSubmit = (Button) rootView.findViewById(R.id.btSubmit);
         btStation = (Button) rootView.findViewById(R.id.btStation);
         listView = (ListView) rootView.findViewById(R.id.listView);
-        listAdapter = new ResultListAdapter();
-        listView.setAdapter(listAdapter);
+        //listAdapter = new ResultListAdapter();
+        //listView.setAdapter(listAdapter);
 
         testInfo.logData();
 
@@ -144,18 +150,26 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
     private void submitScore() {
 
         if(validateInput()) {
-            testInfo.setUserTagId(etID.getText().toString());
-            testInfo.setUserScore((float) (Math.round(Float.parseFloat(etScore.getText().toString())*100.0)/100.0));
 
+            // TODO send score to server
+
+            testInfo.setUserTagId(etID.getText().toString());
+            testInfo.setUserScore((float) (Math.round(Float.parseFloat(etScore.getText().toString()) * 100.0) / 100.0));
+
+            testInfo.logData();
+
+
+//            ResultListManager.getInstance().setDao(dao);
+//            listAdapter.notifyDataSetChanged();
+
+
+            testInfo.setUserTagId(null);
+            testInfo.setUserScore(0);
             etID.setText(null);
             etScore.setText(null);
             etID.setFocusableInTouchMode(true);
             etID.requestFocus();
         }
-
-        testInfo.logData();
-
-        // TODO send score to server
     }
 
 
@@ -182,8 +196,18 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
                     Toast.LENGTH_SHORT).show();
             return false;
         }
+        else if (Float.parseFloat(etScore.getText().toString())<testInfo.getLowScoreBound() ||
+                Float.parseFloat(etScore.getText().toString())>testInfo.getHighScoreBound()){
 
-        // TODO: case invalid score bound -> input score again
+            etScore.setText(null);
+            etScore.setFocusableInTouchMode(true);
+            etScore.requestFocus();
+            Toast.makeText(getActivity(),
+                    "คะแนนผิดปกติ\n"+
+                            "ใส่ใหม่อีกครั้ง",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         return true;
     }

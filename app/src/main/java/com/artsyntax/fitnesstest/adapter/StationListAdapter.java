@@ -59,15 +59,17 @@ public class StationListAdapter extends BaseAdapter {
                 testInfo.setCurrentStationName(dao.getStationName());
                 testInfo.setCurrentStationUnit(dao.getStationUnit());
                 testInfo.setCurrentTestStationID(dao.getTestStationId());
-                float tmpMin = Math.min(Float.valueOf(dao.getLowScoreBound()), Float.valueOf(dao.getHighScoreBound())) * 2;
-                float tmpMax = Math.max(Float.valueOf(dao.getLowScoreBound()), Float.valueOf(dao.getHighScoreBound())) * 2;
-                if (tmpMin < tmpMax) {
-                    testInfo.setLowScoreBound(tmpMin);
-                    testInfo.setHighScoreBound(tmpMax);
-                } else {
-                    testInfo.setLowScoreBound(tmpMax);
-                    testInfo.setHighScoreBound(tmpMin);
+                float tmpMin = Math.min(Float.valueOf(dao.getLowScoreBound()), Float.valueOf(dao.getHighScoreBound()));
+                float tmpMax = Math.max(Float.valueOf(dao.getLowScoreBound()), Float.valueOf(dao.getHighScoreBound()));
+                float scoreRange = (float) ((tmpMax-tmpMin)*0.2);
+                testInfo.setHighScoreBound(tmpMax + scoreRange);
+                if(tmpMin-scoreRange > 0){
+                    testInfo.setLowScoreBound(0);
                 }
+                else{
+                    testInfo.setLowScoreBound(tmpMin - scoreRange);
+                }
+
 
                 Toast.makeText(v.getContext(),
                         "ฐานทดสอบ : " + testInfo.getCurrentStationName(),
