@@ -18,11 +18,7 @@ import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.adapter.ResultListAdapter;
-import com.artsyntax.fitnesstest.dao.PhotoItemCollectionDao;
-import com.artsyntax.fitnesstest.manager.ResultListManager;
 import com.artsyntax.fitnesstest.utils.TestInfo;
-import com.artsyntax.fitnesstest.manager.http.HttpManager;
-
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -98,37 +94,13 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
         listAdapter = new ResultListAdapter();
         listView.setAdapter(listAdapter);
 
+        testInfo.logData();
 
-        Call<PhotoItemCollectionDao> call = HttpManager.getInstance().getService().loadPhotoList();
-        call.enqueue(new Callback<PhotoItemCollectionDao>() {
-            @Override
-            public void onResponse(Call<PhotoItemCollectionDao> call, Response<PhotoItemCollectionDao> response) {
-                if (response.isSuccess()) {
-                    PhotoItemCollectionDao dao = response.body();
-                    ResultListManager.getInstance().setDao(dao);
-                    listAdapter.notifyDataSetChanged();
-                } else {              // 404 not found
-                    try {
-                        Toast.makeText(getActivity(),
-                                response.errorBody().string(),
-                                Toast.LENGTH_SHORT)
-                                .show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<PhotoItemCollectionDao> call, Throwable t) {     // cannot connect server
-
-                Toast.makeText(getActivity(),
-                        t.toString(),
-                        Toast.LENGTH_SHORT)
-                        .show();
-            }
-        });
+        // TODO : call server
     }
+
+
 
     public void setEditText(String text){
         etID.setText(text);
@@ -171,10 +143,21 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
 
     private void submitScore() {
 
-        // TODO send score to server
-        validateInput();
+        if(validateInput()) {
+            testInfo.setUserTagId(etID.getText().toString());
+            testInfo.setUserScore((float) (Math.round(Float.parseFloat(etScore.getText().toString())*100.0)/100.0));
 
+            etID.setText(null);
+            etScore.setText(null);
+            etID.setFocusableInTouchMode(true);
+            etID.requestFocus();
+        }
+
+        testInfo.logData();
+
+        // TODO send score to server
     }
+
 
     private boolean validateInput() {
         if (testInfo.getCurrentTestStationID()==null){

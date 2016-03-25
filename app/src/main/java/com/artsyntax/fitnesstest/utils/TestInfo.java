@@ -1,6 +1,7 @@
 package com.artsyntax.fitnesstest.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.artsyntax.fitnesstest.R;
 import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
@@ -43,6 +44,21 @@ public class TestInfo {
         setUserScore(0);
         setLowScoreBound(0);
         setHighScoreBound(0);
+    }
+
+    public static void logData(){
+
+        Log.d("testinfo", "=============== data information ===============");
+        Log.d("testinfo", "IP: "+getServerIp());
+        Log.d("testinfo", "Test code: "+getTestCode());
+        Log.d("testinfo", "Test name: "+getTestName());
+        Log.d("testinfo", "Station name: "+getCurrentStationName());
+        Log.d("testinfo", "Station unit: "+getCurrentStationUnit());
+        Log.d("testinfo", "Test Station ID: " + getCurrentTestStationID());
+        Log.d("testinfo", "Low Score Bound: "+getLowScoreBound());
+        Log.d("testinfo", "High Score Bound: "+getHighScoreBound());
+        Log.d("testinfo", "User Tag Id: "+getUserTagId());
+        Log.d("testinfo", "User Score: "+getUserScore());
     }
 
     public static String getServerIp() {
