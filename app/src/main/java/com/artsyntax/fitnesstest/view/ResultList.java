@@ -2,9 +2,11 @@ package com.artsyntax.fitnesstest.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.artsyntax.fitnesstest.R;
@@ -18,6 +20,7 @@ public class ResultList extends BaseCustomViewGroup {
     private TextView tvResultListScore;
     private TextView tvResultListStation;
     private TextView tvResultListDate;
+    private LinearLayout loScoreList;
 
     public ResultList(Context context) {
         super(context);
@@ -57,6 +60,7 @@ public class ResultList extends BaseCustomViewGroup {
         tvResultListScore = (TextView) findViewById(R.id.tvResultListScore);
         tvResultListStation = (TextView) findViewById(R.id.tvResultListStation);
         tvResultListDate = (TextView) findViewById(R.id.tvResultListDate);
+        loScoreList = (LinearLayout) findViewById(R.id.loScoreList);
 
     }
 
@@ -74,6 +78,13 @@ public class ResultList extends BaseCustomViewGroup {
 
     public void setTextDate(String text) {
         tvResultListDate.setText(text);
+    }
+
+    public void setBackgroundScoreList(boolean atServer){
+        if(atServer)
+            loScoreList.setBackgroundResource(R.color.colorFeed);
+        else
+            loScoreList.setBackgroundResource(R.color.colorFeedFail);
     }
 
     private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {

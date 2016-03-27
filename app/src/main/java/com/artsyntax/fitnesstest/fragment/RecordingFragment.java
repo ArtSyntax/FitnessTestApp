@@ -19,12 +19,20 @@ import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.adapter.ResultListAdapter;
+import com.artsyntax.fitnesstest.adapter.ScoreListAdapter;
 import com.artsyntax.fitnesstest.dao.ResultDao;
 import com.artsyntax.fitnesstest.manager.ResultListManager;
+import com.artsyntax.fitnesstest.manager.ScoreListManager;
+import com.artsyntax.fitnesstest.utils.Score;
+import com.artsyntax.fitnesstest.utils.ScoreList;
 import com.artsyntax.fitnesstest.utils.TestInfo;
 import com.artsyntax.fitnesstest.view.ResultList;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,16 +43,15 @@ import retrofit2.Response;
  */
 public class RecordingFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
-    int someVar;
-
+    TestInfo testInfo;
     EditText etID;
     EditText etScore;
     Button btSubmit;
     Button btStation;
     ListView listView;
-    ResultListAdapter listAdapter;
-    TestInfo testInfo;
-    ResultDao dao;
+    ScoreListAdapter listAdapter;
+    ScoreList allUserScore;
+
 
     public static RecordingFragment newInstance() {
         RecordingFragment fragment = new RecordingFragment();
@@ -65,7 +72,6 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        someVar = getArguments().getInt("someVar"); // read args
     }
 
     @Nullable
@@ -97,8 +103,18 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
         btSubmit = (Button) rootView.findViewById(R.id.btSubmit);
         btStation = (Button) rootView.findViewById(R.id.btStation);
         listView = (ListView) rootView.findViewById(R.id.listView);
-        //listAdapter = new ResultListAdapter();
-        //listView.setAdapter(listAdapter);
+
+
+        //listview score
+
+
+        allUserScore = new ScoreList();
+        listAdapter = new ScoreListAdapter();
+        listView.setAdapter(listAdapter);
+        ScoreListManager.getInstance().setAllScore(allUserScore);
+
+
+
 
         testInfo.logData();
 
@@ -150,26 +166,37 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
     private void submitScore() {
 
         if(validateInput()) {
+            addNewScore();
+            listAdapter.notifyDataSetChanged();
 
             // TODO send score to server
 
-            testInfo.setUserTagId(etID.getText().toString());
-            testInfo.setUserScore((float) (Math.round(Float.parseFloat(etScore.getText().toString()) * 100.0) / 100.0));
-
-            testInfo.logData();
-
-
-//            ResultListManager.getInstance().setDao(dao);
-//            listAdapter.notifyDataSetChanged();
-
-
-            testInfo.setUserTagId(null);
-            testInfo.setUserScore(0);
-            etID.setText(null);
-            etScore.setText(null);
-            etID.setFocusableInTouchMode(true);
-            etID.requestFocus();
         }
+    }
+
+    private void addNewScore() {
+        Score newScore = new Score();
+        SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss aa");  // default ddMMyyyyhhmmss
+        String format = s.format(new Date());
+
+        testInfo.setUserTagId(etID.getText().toString());
+        testInfo.setUserScore((float) (Math.round(Float.parseFloat(etScore.getText().toString()) * 100.0) / 100.0));
+        testInfo.logData();
+
+        newScore.setAtServer(false);
+        newScore.setId(testInfo.getUserTagId());
+        newScore.setScore(testInfo.getUserScore() + "");
+        newScore.setStation(testInfo.getCurrentStationName());
+        newScore.setDate(format);
+        allUserScore.addScore(newScore);
+
+        testInfo.setUserTagId(null);
+        testInfo.setUserScore(0);
+        etID.setText(null);
+        etScore.setText(null);
+        etID.setFocusableInTouchMode(true);
+        etID.requestFocus();
+
     }
 
 
