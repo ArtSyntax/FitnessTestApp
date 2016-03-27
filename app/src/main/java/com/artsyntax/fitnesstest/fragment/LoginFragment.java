@@ -28,13 +28,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener{
+public class LoginFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
     EditText etTestCode;
     EditText etServerIp;
     Button btLogin;
     TextView tvCurrentTestCode;
     TestInfo testInfo;
-    //private Toast toast;
     private ArrayList<Toast> toast = new ArrayList<Toast>();
 
     public LoginFragment() {
@@ -51,17 +50,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
-        hiddenKeyboard(rootView);
         initInstances(rootView);
+        hiddenKeyboard(rootView);
         btLogin.setOnClickListener(this);
         etServerIp.setOnEditorActionListener(this);
         etTestCode.setText(testInfo.getTestCode());
         etServerIp.setText(testInfo.getServerIp());
         if (testInfo.getTestName() != null) {
-            tvCurrentTestCode.setText(testInfo.getTestName()+"\n ("+testInfo.getTestCode()+")");
+            tvCurrentTestCode.setText(testInfo.getTestName() + "\n (" + testInfo.getTestCode() + ")");
             etTestCode.setText(testInfo.getTestCode());
-        }
-        else{
+        } else {
             tvCurrentTestCode.setText(getResources().getString(R.string.input_test_code));
         }
         return rootView;
@@ -136,8 +134,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
             etTestCode.setFocusableInTouchMode(true);
             etTestCode.requestFocus();
             return false;
-        }
-        else if (etServerIp.length() < 7) {
+        } else if (etServerIp.length() < 7) {
             clearToast();
             makeToast("หมายเลขไอพีผิดพลาด\n" +
                     "เปลี่ยนกลับเป็นค่าเริ่มต้น");
@@ -145,17 +142,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
             etServerIp.setFocusableInTouchMode(true);
             etServerIp.requestFocus();
             return false;
-        }
-        else{
+        } else {
             clearToast();
-            for(int i=0;i<10;i++) {     // toast LENGTH.LONG x10 time
+            for (int i = 0; i < 10; i++) {     // toast LENGTH.LONG x10 time
                 makeToast("กำลังเชื่อมต่อ...");
             }
         }
         return true;
     }
 
-    private void makeToast(String text){
+    private void makeToast(String text) {
         Toast t = Toast.makeText(getActivity(),
                 text,
                 Toast.LENGTH_LONG);
@@ -164,8 +160,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
     }
 
     private void clearToast() {
-        for(Toast t:toast){
-            if(t!=null) {
+        for (Toast t : toast) {
+            if (t != null) {
                 t.cancel();
             }
         }
@@ -173,10 +169,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
     }
 
     private void hiddenKeyboard(View v) {
-        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(v.getContext().INPUT_METHOD_SERVICE);
-        keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
+        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
+        try {
+            keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
+    }
 
     private void submitTestCode() {
         Log.d("station", "IP : " + testInfo.getServerIp() + " Testcode : " + testInfo.getTestCode());
@@ -190,9 +190,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
                 if (response.isSuccess()) {
                     TestNameDao dao = response.body();
 
-                    if (dao.getFound().toString().equals("1")){           // found testcode goto recording fragment
+                    if (dao.getFound().toString().equals("1")) {           // found testcode goto recording fragment
                         testInfo.setTestName(dao.getTestName());
                         hiddenKeyboard(getView());
+                        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .replace(R.id.contentContainer, RecordingFragment.newInstance())
@@ -200,8 +201,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
                         tvCurrentTestCode.setText(testInfo.getTestName() + " (" + testInfo.getTestCode() + ")");
                         clearToast();
                         makeToast(testInfo.getTestName());
-                    }
-                    else{                                                   // test code not found
+                    } else {                                                   // test code not found
                         etTestCode.setFocusableInTouchMode(true);
                         etTestCode.requestFocus();
                         etTestCode.setText(null);
@@ -218,7 +218,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
                         tvCurrentTestCode.setText(getResources().getString(R.string.input_test_code));
                         clearToast();
                         makeToast("ไม่พบรหัสแบบทดสอบ");
-                        Log.d("Error! 404 Not found: ",response.errorBody().string());      // error message
+                        Log.d("Error! 404 Not found: ", response.errorBody().string());      // error message
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

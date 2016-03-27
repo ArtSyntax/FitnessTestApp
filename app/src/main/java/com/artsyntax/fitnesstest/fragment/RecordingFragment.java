@@ -93,7 +93,7 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
     }
 
     private void hiddenKeyboard(View v) {
-        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(v.getContext().INPUT_METHOD_SERVICE);
+        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
@@ -103,25 +103,26 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
         btSubmit = (Button) rootView.findViewById(R.id.btSubmit);
         btStation = (Button) rootView.findViewById(R.id.btStation);
         listView = (ListView) rootView.findViewById(R.id.listView);
-
-
-        //listview score
-
-
         allUserScore = new ScoreList();
         listAdapter = new ScoreListAdapter();
         listView.setAdapter(listAdapter);
         ScoreListManager.getInstance().setAllScore(allUserScore);
 
-
-
+        ableConnect();
 
         testInfo.logData();
-
-
-        // TODO : call server
     }
 
+    private boolean ableConnect() {
+        if (testInfo.getTestName()==null){
+            Toast.makeText(getActivity(),
+                    "กรุณาใส่รหัสแบบทดสอบใหม่",
+                    Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+        return true;
+    }
 
 
     public void setEditText(String text){
@@ -168,15 +169,12 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
         if(validateInput()) {
             addNewScore();
             listAdapter.notifyDataSetChanged();
-
-            // TODO send score to server
-
         }
     }
 
     private void addNewScore() {
         Score newScore = new Score();
-        SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss aa");  // default ddMMyyyyhhmmss
+        SimpleDateFormat s = new SimpleDateFormat("HH:mm:ss");  // default ddMMyyyyhhmmss aa
         String format = s.format(new Date());
 
         testInfo.setUserTagId(etID.getText().toString());
@@ -201,7 +199,10 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
 
 
     private boolean validateInput() {
-        if (testInfo.getCurrentTestStationID()==null){
+        if (!ableConnect()){
+            return false;
+        }
+        else if (testInfo.getCurrentTestStationID()==null){
             Toast.makeText(getActivity(),
                     "กรุณาเลือกฐานการทดสอบ",
                     Toast.LENGTH_SHORT).show();

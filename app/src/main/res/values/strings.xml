@@ -32,7 +32,7 @@
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
     <string name="label_logout">ออกจากระบบ</string>
-    <string name="menu_testcode">แบบทดสอบ</string>
+    <string name="menu_testcode">ตั้งค่าแบบทดสอบ</string>
     <string name="serverip">หมายเลขไอพีของเซิฟเวอร์</string>
     <string name="input_test_code">กรอกรหัสแบบทดสอบ</string>
     <string name="default_ip">158.108.34.49</string>

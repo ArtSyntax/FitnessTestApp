@@ -14,6 +14,7 @@ import com.artsyntax.fitnesstest.fragment.RecordingFragment;
 import com.artsyntax.fitnesstest.manager.StationListManager;
 import com.artsyntax.fitnesstest.utils.TestInfo;
 import com.artsyntax.fitnesstest.view.StationList;
+import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 
 /**
  * Created by ArtSyntax on 17/2/2559.

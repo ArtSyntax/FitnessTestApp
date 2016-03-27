@@ -1,5 +1,6 @@
 package com.artsyntax.fitnesstest.activity;
 
+import android.app.Application;
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,10 +16,12 @@ import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.artsyntax.fitnesstest.MainApplication;
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.fragment.LoginFragment;
 import com.artsyntax.fitnesstest.fragment.RecordingFragment;
 import com.artsyntax.fitnesstest.utils.TestInfo;
+import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_profile:
                 if (fragment instanceof LoginFragment == false) {
-                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    getSupportFragmentManager().popBackStack(0, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     hiddenKeyboard(findViewById(R.id.toolbar));
                     getSupportFragmentManager().beginTransaction()
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void hiddenKeyboard(View v) {
-        InputMethodManager keyboard = (InputMethodManager) getSystemService(v.getContext().INPUT_METHOD_SERVICE);
+        InputMethodManager keyboard = (InputMethodManager) getSystemService(Contextor.getInstance().getContext().INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }

@@ -53,7 +53,9 @@ public class StationFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.listView);
         listAdapter = new StationListAdapter();
         listView.setAdapter(listAdapter);
-        Log.d("station","testcode : "+testInfo.getTestCode());
+        Log.d("station", "testcode : " + testInfo.getTestCode());
+        Log.d("station", "testname : " + testInfo.getTestName());
+
         Call<StationListDao> call = SQLManager.getInstance().getStations().loadStationsList(testInfo.getTestCode());
         call.enqueue(new Callback<StationListDao>() {
             @Override
@@ -62,12 +64,18 @@ public class StationFragment extends Fragment {
                     dao = response.body();
                     StationListManager.getInstance().setDao(dao);
                     listAdapter.notifyDataSetChanged();
-
                     Log.d("station", "create");
+                    if (testInfo.getTestName()==null){
+                        Toast.makeText(getActivity(),
+                                "กรุณาใส่รหัสแบบทดสอบใหม่",
+                                Toast.LENGTH_SHORT)
+                                .show();
+                    }
+
                 } else {              // 404 not found
                     try {
                         Toast.makeText(getActivity(),
-                                "เชื่อมต่อใหม่อีกครั้ง",
+                                "กรุณาใส่รหัสแบบทดสอบใหม่",
                                 Toast.LENGTH_SHORT)
                                 .show();
                         Log.d("Error! 404 Not found: ", response.errorBody().string());      // error message
@@ -81,18 +89,20 @@ public class StationFragment extends Fragment {
             public void onFailure(Call<StationListDao> call, Throwable t) {     // cannot connect server
                 hiddenKeyboard(getView());
                 Toast.makeText(getActivity(),
-                        "กรุณาเชื่อมต่อใหม่",
+                        "เครือข่ายมีปัญหา!",
                         Toast.LENGTH_SHORT)
                         .show();
                 Log.d("Error! no server: ", t.toString());         // error message
             }
         });
+
     }
 
     private void hiddenKeyboard(View v) {
-        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(v.getContext().INPUT_METHOD_SERVICE);
+        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
+
     @Override
     public void onStart() {
         super.onStart();

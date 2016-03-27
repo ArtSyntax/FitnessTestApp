@@ -21,6 +21,7 @@ import com.artsyntax.fitnesstest.view.StationList;
  */
 public class ScoreListAdapter extends BaseAdapter {
     TestInfo testInfo;
+    Score userScore;
     private Context mContext;
 
     @Override
@@ -50,12 +51,20 @@ public class ScoreListAdapter extends BaseAdapter {
         else
             item = new ResultList(parent.getContext());
 
-        final Score userScore = (Score) getItem(position);
+        userScore = (Score) getItem(position);
+
+        if(!userScore.isAtServer())
+            submitScoreToServer();
+        item.setBackgroundScoreList(userScore.isAtServer());
         item.setTextID(userScore.getId());
         item.setTextScore(userScore.getScore());
         item.setTextStation(userScore.getStation());
         item.setTextDate(userScore.getDate());
-        item.setBackgroundScoreList(userScore.isAtServer());
         return item;
+    }
+
+    private void submitScoreToServer(){
+        // TODO: submit score to server
+        //userScore.setAtServer(true);
     }
 }
