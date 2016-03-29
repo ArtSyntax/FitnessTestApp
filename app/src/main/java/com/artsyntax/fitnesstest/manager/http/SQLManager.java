@@ -14,6 +14,7 @@ public class SQLManager {
     private static SQLManager instance;
     private ApiCheckTestCode checkTestCode;
     private ApiGetStations stations;
+    private ApiSetScore serverScore;
     TestInfo testInfo;
 
     public void setServerIP() {
@@ -23,6 +24,7 @@ public class SQLManager {
                 .build();
         checkTestCode = retrofit.create(ApiCheckTestCode.class);
         stations = retrofit.create(ApiGetStations.class);
+        serverScore = retrofit.create(ApiSetScore.class);
     }
 
     public static SQLManager getInstance() {
@@ -44,6 +46,7 @@ public class SQLManager {
                 .build();
         checkTestCode = retrofit.create(ApiCheckTestCode.class);
         stations = retrofit.create(ApiGetStations.class);
+        serverScore = retrofit.create(ApiSetScore.class);
     }
 
     public ApiCheckTestCode getCheckTestCode(){
@@ -53,4 +56,6 @@ public class SQLManager {
     public ApiGetStations getStations(){
         return stations;
     }
+
+    public ApiSetScore submitScore(){return serverScore;}
 }

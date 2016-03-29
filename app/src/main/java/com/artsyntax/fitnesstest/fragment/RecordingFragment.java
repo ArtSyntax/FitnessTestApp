@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -18,25 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.artsyntax.fitnesstest.R;
-import com.artsyntax.fitnesstest.adapter.ResultListAdapter;
 import com.artsyntax.fitnesstest.adapter.ScoreListAdapter;
-import com.artsyntax.fitnesstest.dao.ResultDao;
-import com.artsyntax.fitnesstest.manager.ResultListManager;
 import com.artsyntax.fitnesstest.manager.ScoreListManager;
 import com.artsyntax.fitnesstest.utils.Score;
 import com.artsyntax.fitnesstest.utils.ScoreList;
 import com.artsyntax.fitnesstest.utils.TestInfo;
-import com.artsyntax.fitnesstest.view.ResultList;
-
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by ArtSyntax on 27/1/2559.
@@ -50,7 +38,7 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
     Button btStation;
     ListView listView;
     ScoreListAdapter listAdapter;
-    ScoreList allUserScore;
+    static ScoreList allUserScore;
 
 
     public static RecordingFragment newInstance() {
@@ -186,6 +174,8 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
         newScore.setScore(testInfo.getUserScore() + "");
         newScore.setStation(testInfo.getCurrentStationName());
         newScore.setDate(format);
+        newScore.setTestCode(testInfo.getTestCode());
+        newScore.setTestStationID(testInfo.getCurrentTestStationID());
         allUserScore.addScore(newScore);
 
         testInfo.setUserTagId(null);

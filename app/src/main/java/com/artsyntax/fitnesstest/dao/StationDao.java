@@ -10,7 +10,7 @@ public class StationDao {
     @SerializedName("station_name")         private String stationName;
     @SerializedName("station_unit")         private String stationUnit;
     @SerializedName("low_score_bound")      private String lowScoreBound;
-    @SerializedName("high_score_bound")      private String highScoreBound;
+    @SerializedName("high_score_bound")     private String highScoreBound;
 
     public String getTestStationId() {
         return testStationId;

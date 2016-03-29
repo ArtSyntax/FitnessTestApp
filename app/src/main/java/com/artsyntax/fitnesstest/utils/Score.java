@@ -1,9 +1,14 @@
 package com.artsyntax.fitnesstest.utils;
 
+import android.content.Context;
+
+import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
+
 /**
  * Created by ArtSyntax on 27/3/2559.
  */
 public class Score {
+
     boolean atServer;
     String id;
     String score;
@@ -11,6 +16,8 @@ public class Score {
     String date;
     String firstname;
     String lastname;
+    String testStationID;
+    String testCode;
 
     public boolean isAtServer() {
         return atServer;
@@ -66,5 +73,21 @@ public class Score {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getTestStationID() {
+        return testStationID;
+    }
+
+    public void setTestStationID(String testStationID) {
+        this.testStationID = testStationID;
+    }
+
+    public String getTestCode() {
+        return testCode;
+    }
+
+    public void setTestCode(String testCode) {
+        this.testCode = testCode;
     }
 }
