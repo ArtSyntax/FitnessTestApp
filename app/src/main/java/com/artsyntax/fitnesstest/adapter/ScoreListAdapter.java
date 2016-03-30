@@ -65,22 +65,21 @@ public class ScoreListAdapter extends BaseAdapter {
 
         userScore = (Score) getItem(position);
 
-        Log.d("userscore",userScore.getId()+" "+userScore.isAtServer());
-        if (!userScore.isAtServer()){
-            submitScoreToServer(item);
-            ScoreListManager.getInstance().getData().editScore(position,userScore);
-        }
+
+        submitScoreToServer(item);
         if (userScore.getFirstname() == null)
             item.setTextID(userScore.getId());
+
         item.setTextScore(userScore.getScore());
         item.setTextStation(userScore.getStation());
         item.setTextDate(userScore.getDate());
         item.setBackgroundScoreList(userScore.isAtServer());
-        //ScoreListManager.getInstance().getData().logData();
+        ScoreListManager.getInstance().getData().logData();
         return item;
+
     }
 
-    private void submitScoreToServer(final ResultList item) {
+    private void submitScoreToServer( final ResultList item) {
         Log.d("userscore", "1>> " + userScore.getId() + " " + userScore.isAtServer());
         Call<ResultDao> call = SQLManager.getInstance().submitScore().submit(userScore.getTestCode(),
                 userScore.getTestStationID(),userScore.getId(),userScore.getScore()+"");
@@ -98,9 +97,7 @@ public class ScoreListAdapter extends BaseAdapter {
                         item.setTextID(userScore.getFirstname() + " " + userScore.getLastname());
                         item.setBackgroundScoreList(userScore.isAtServer());
                         clearToast();
-                        makeToast(userScore.getFirstname() + " " + userScore.getLastname());
-                        Log.d("userscore", "2>> " + userScore.getId() + " " + userScore.isAtServer()+" "+userScore.getFirstname());
-
+                        //makeToast(userScore.getFirstname() + " " + userScore.getLastname());
                     }
                     else {
                         clearToast();
@@ -124,7 +121,6 @@ public class ScoreListAdapter extends BaseAdapter {
                 Log.d("Error! no server: ", t.toString());         // error message
             }
         });
-        Log.d("userscore","3>>");
     }
 
     private void clearToast() {

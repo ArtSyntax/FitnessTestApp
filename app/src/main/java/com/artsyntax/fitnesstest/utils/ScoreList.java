@@ -10,9 +10,9 @@ import java.util.List;
  */
 public class ScoreList {
 
-    private  List<Score> allScore;
+    private static List<Score> allScore;
 
-    public List<Score> getInstance() {
+    public static List<Score> getInstance() {
         if (allScore == null)
             allScore = new ArrayList<>();
         return allScore;
