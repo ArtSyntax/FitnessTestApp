@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">HealthTest</string>
+    <string name="version">Version: beta</string>
     <string name="title_section1">บันทึกคะแนน</string>
     <string name="title_section2">แบบทดสอบ</string>
     <string name="title_section3">ฐานทดสอบ</string>
@@ -36,6 +37,5 @@
     <string name="serverip">หมายเลขไอพีของเซิฟเวอร์</string>
     <string name="input_test_code">กรอกรหัสแบบทดสอบ</string>
     <string name="default_ip">158.108.34.49</string>
-    <string name="version">Version: alpha</string>
 
 </resources>

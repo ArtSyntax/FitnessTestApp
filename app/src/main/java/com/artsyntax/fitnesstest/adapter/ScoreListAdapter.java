@@ -7,21 +7,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
-import com.artsyntax.fitnesstest.activity.MainActivity;
 import com.artsyntax.fitnesstest.dao.ResultDao;
-import com.artsyntax.fitnesstest.dao.StationDao;
 import com.artsyntax.fitnesstest.manager.ResultListManager;
 import com.artsyntax.fitnesstest.manager.ScoreListManager;
-import com.artsyntax.fitnesstest.manager.StationListManager;
 import com.artsyntax.fitnesstest.manager.http.SQLManager;
 import com.artsyntax.fitnesstest.utils.Score;
+import com.artsyntax.fitnesstest.utils.ScoreList;
 import com.artsyntax.fitnesstest.utils.TestInfo;
 import com.artsyntax.fitnesstest.view.ResultList;
-import com.artsyntax.fitnesstest.view.StationList;
 import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +32,7 @@ public class ScoreListAdapter extends BaseAdapter {
     TestInfo testInfo;
     private Context mContext;
     private ArrayList<Toast> toast = new ArrayList<Toast>();
-    Score userScore;
+    List<Score> allUserScore = new ScoreList().getInstance();
 
     @Override
     public int getCount() {
@@ -63,26 +61,28 @@ public class ScoreListAdapter extends BaseAdapter {
         else
             item = new ResultList(parent.getContext());
 
-        userScore = (Score) getItem(position);
 
+        if (!allUserScore.get(position).isAtServer())
+            submitScoreToServer(item,position);
+        if (allUserScore.get(position).getFirstname() == null)
+            item.setTextID(allUserScore.get(position).getId());
+        else
+            item.setTextID(allUserScore.get(position).getFirstname() + " " + allUserScore.get(position).getLastname());
 
-        submitScoreToServer(item);
-        if (userScore.getFirstname() == null)
-            item.setTextID(userScore.getId());
-
-        item.setTextScore(userScore.getScore());
-        item.setTextStation(userScore.getStation());
-        item.setTextDate(userScore.getDate());
-        item.setBackgroundScoreList(userScore.isAtServer());
-        ScoreListManager.getInstance().getData().logData();
+        item.setTextScore(allUserScore.get(position).getScore());
+        item.setTextStation(allUserScore.get(position).getStation());
+        item.setTextDate(allUserScore.get(position).getDate());
+        item.setBackgroundScoreList(allUserScore.get(position).isAtServer());
         return item;
 
     }
 
-    private void submitScoreToServer( final ResultList item) {
-        Log.d("userscore", "1>> " + userScore.getId() + " " + userScore.isAtServer());
-        Call<ResultDao> call = SQLManager.getInstance().submitScore().submit(userScore.getTestCode(),
-                userScore.getTestStationID(),userScore.getId(),userScore.getScore()+"");
+    private void submitScoreToServer( final ResultList item, final int position) {
+        Log.d("userscore",position+"");
+        ScoreListManager.getInstance().getData().logData();
+
+        Call<ResultDao> call = SQLManager.getInstance().submitScore().submit(allUserScore.get(position).getTestCode(),
+                allUserScore.get(position).getTestStationID(),allUserScore.get(position).getId(),allUserScore.get(position).getScore()+"");
         call.enqueue(new Callback<ResultDao>() {
             @Override
             public void onResponse(Call<ResultDao> call, Response<ResultDao> response) {
@@ -91,15 +91,14 @@ public class ScoreListAdapter extends BaseAdapter {
                     ResultListManager.getInstance().setDao(dao);
 
                     if (dao.getFound().equals("1")) {               // found tag id in testcode
-                        userScore.setAtServer(true);
-                        userScore.setFirstname(dao.getFirstname());
-                        userScore.setLastname(dao.getLastname());
-                        item.setTextID(userScore.getFirstname() + " " + userScore.getLastname());
-                        item.setBackgroundScoreList(userScore.isAtServer());
-                        clearToast();
-                        //makeToast(userScore.getFirstname() + " " + userScore.getLastname());
-                    }
-                    else {
+                        allUserScore.get(position).setAtServer(true);
+                        allUserScore.get(position).setFirstname(dao.getFirstname());
+                        allUserScore.get(position).setLastname(dao.getLastname());
+                        item.setTextID(allUserScore.get(position).getFirstname() + " " + allUserScore.get(position).getLastname());
+                        item.setBackgroundScoreList(allUserScore.get(position).isAtServer());
+//                        clearToast();
+//                        makeToast(allUserScore.get(position).getFirstname() + " " + allUserScore.get(position).getLastname());
+                    } else {
                         clearToast();
                         makeToast("ไม่พบหมายเลขผู้ทดสอบ");
                     }
