@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">HealthTest</string>
-    <string name="version">Version: beta</string>
+    <string name="version">Version: beta2</string>
     <string name="title_section1">บันทึกคะแนน</string>
     <string name="title_section2">แบบทดสอบ</string>
     <string name="title_section3">ฐานทดสอบ</string>

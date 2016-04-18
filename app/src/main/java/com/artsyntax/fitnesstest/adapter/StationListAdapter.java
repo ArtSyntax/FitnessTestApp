@@ -60,9 +60,9 @@ public class StationListAdapter extends BaseAdapter {
                 testInfo.setCurrentStationName(dao.getStationName());
                 testInfo.setCurrentStationUnit(dao.getStationUnit());
                 testInfo.setCurrentTestStationID(dao.getTestStationId());
-                float tmpMin = Math.min(Float.valueOf(dao.getLowScoreBound()), Float.valueOf(dao.getHighScoreBound()));
-                float tmpMax = Math.max(Float.valueOf(dao.getLowScoreBound()), Float.valueOf(dao.getHighScoreBound()));
-                float scoreRange = (float) ((tmpMax-tmpMin)*0.2);
+                double tmpMin = Math.min(Double.valueOf(dao.getLowScoreBound()), Double.valueOf(dao.getHighScoreBound()));
+                double tmpMax = Math.max(Double.valueOf(dao.getLowScoreBound()), Double.valueOf(dao.getHighScoreBound()));
+                double scoreRange = (double) ((tmpMax-tmpMin)*2);
                 testInfo.setHighScoreBound(tmpMax + scoreRange);
                 if(tmpMin-scoreRange > 0){
                     testInfo.setLowScoreBound(0);

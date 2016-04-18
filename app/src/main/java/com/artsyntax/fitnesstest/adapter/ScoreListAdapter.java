@@ -99,8 +99,13 @@ public class ScoreListAdapter extends BaseAdapter {
 //                        clearToast();
 //                        makeToast(allUserScore.get(position).getFirstname() + " " + allUserScore.get(position).getLastname());
                     } else {
+                        String id = allUserScore.get(position).getId();
                         clearToast();
                         makeToast("ไม่พบหมายเลขผู้ทดสอบ");
+                        allUserScore.get(position).setAtServer(true);
+                        allUserScore.get(position).setFirstname(id+"(ไม่พบหมายเลข)");
+                        allUserScore.get(position).setLastname("");
+                        item.setTextID(allUserScore.get(position).getFirstname() + " " + allUserScore.get(position).getLastname());
                     }
                 } else {                              // 404 not found
                     try {

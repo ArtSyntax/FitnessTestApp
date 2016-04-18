@@ -166,7 +166,7 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
         String format = s.format(new Date());
 
         testInfo.setUserTagId(etID.getText().toString());
-        testInfo.setUserScore((float) (Math.round(Float.parseFloat(etScore.getText().toString()) * 100.0) / 100.0));
+        testInfo.setUserScore((double) (Math.round(Double.parseDouble(etScore.getText().toString()) * 100.0) / 100.0));
         testInfo.logData();
 
         newScore.setAtServer(false);
@@ -214,17 +214,15 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if (Float.parseFloat(etScore.getText().toString())<testInfo.getLowScoreBound() ||
-                Float.parseFloat(etScore.getText().toString())>testInfo.getHighScoreBound()){
-
-            etScore.setText(null);
-            etScore.setFocusableInTouchMode(true);
-            etScore.requestFocus();
+        else if (Double.parseDouble(etScore.getText().toString())<testInfo.getLowScoreBound() ||
+                Double.parseDouble(etScore.getText().toString())>testInfo.getHighScoreBound()){
+//            etScore.setText(null);
+//            etScore.setFocusableInTouchMode(true);
+//            etScore.requestFocus();
             Toast.makeText(getActivity(),
-                    "คะแนนผิดปกติ\n"+
-                            "ใส่ใหม่อีกครั้ง",
+                    "คำเตือน: คะแนนมีค่าผิดปกติ",
                     Toast.LENGTH_SHORT).show();
-            return false;
+            return true;
         }
 
         return true;

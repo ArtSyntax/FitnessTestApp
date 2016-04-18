@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:icon="@drawable/ic_menu_paste_holo_dark"
-
         android:id="@+id/action_profile"
         android:title="@string/menu_testcode"
         app:showAsAction="always"/>
 </menu>
+

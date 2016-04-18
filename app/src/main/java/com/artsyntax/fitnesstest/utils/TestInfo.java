@@ -17,9 +17,9 @@ public class TestInfo {
     private static String currentStationUnit;
     private static String currentTestStationID;
     private static String userTagId;
-    private static float userScore;
-    private static float lowScoreBound;
-    private static float highScoreBound;
+    private static double userScore;
+    private static double lowScoreBound;
+    private static double highScoreBound;
 
     public static TestInfo getInstance() {
         if (instance == null)
@@ -109,19 +109,19 @@ public class TestInfo {
         TestInfo.currentTestStationID = currentTestStationID;
     }
 
-    public static float getHighScoreBound() {
+    public static double getHighScoreBound() {
         return highScoreBound;
     }
 
-    public static void setHighScoreBound(float highScoreBound) {
+    public static void setHighScoreBound(double highScoreBound) {
         TestInfo.highScoreBound = highScoreBound;
     }
 
-    public static float getLowScoreBound() {
+    public static double getLowScoreBound() {
         return lowScoreBound;
     }
 
-    public static void setLowScoreBound(float lowScoreBound) {
+    public static void setLowScoreBound(double lowScoreBound) {
         TestInfo.lowScoreBound = lowScoreBound;
     }
 
@@ -133,11 +133,11 @@ public class TestInfo {
         TestInfo.userTagId = userTagId;
     }
 
-    public static float getUserScore() {
+    public static double getUserScore() {
         return userScore;
     }
 
-    public static void setUserScore(float userScore) {
+    public static void setUserScore(double userScore) {
         TestInfo.userScore = userScore;
     }
 }
