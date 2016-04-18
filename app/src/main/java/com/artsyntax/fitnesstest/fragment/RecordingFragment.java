@@ -1,5 +1,8 @@
 package com.artsyntax.fitnesstest.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.adapter.ScoreListAdapter;
 import com.artsyntax.fitnesstest.manager.ScoreListManager;
+import com.artsyntax.fitnesstest.utils.NetworkUtil;
 import com.artsyntax.fitnesstest.utils.Score;
 import com.artsyntax.fitnesstest.utils.ScoreList;
 import com.artsyntax.fitnesstest.utils.TestInfo;
@@ -187,7 +191,6 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
 
     }
 
-
     private boolean validateInput() {
         if (!ableConnect()){
             return false;
@@ -227,5 +230,13 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
 
         return true;
     }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            String status = NetworkUtil.getConnectivityStatusString(context);
+            Toast.makeText(context, status, Toast.LENGTH_LONG).show();
+        }
+    };
 
 }
