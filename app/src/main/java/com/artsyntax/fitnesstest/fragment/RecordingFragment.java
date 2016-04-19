@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.artsyntax.fitnesstest.R;
 import com.artsyntax.fitnesstest.adapter.ScoreListAdapter;
 import com.artsyntax.fitnesstest.manager.ScoreListManager;
+import com.artsyntax.fitnesstest.utils.NetworkChangeReceiver;
 import com.artsyntax.fitnesstest.utils.NetworkUtil;
 import com.artsyntax.fitnesstest.utils.Score;
 import com.artsyntax.fitnesstest.utils.ScoreList;
@@ -33,7 +34,7 @@ import java.util.Date;
 /**
  * Created by ArtSyntax on 27/1/2559.
  */
-public class RecordingFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
+public class RecordingFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener, NetworkChangeReceiver.NetworkStateReceiverListener {
 
     TestInfo testInfo;
     EditText etID;
@@ -43,6 +44,7 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
     ListView listView;
     ScoreListAdapter listAdapter;
     static ScoreList allUserScore;
+    NetworkChangeReceiver networkChangeReceiver;
 
 
     public static RecordingFragment newInstance() {
@@ -63,24 +65,24 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recording, container, false);
+
         hiddenKeyboard(rootView);
         initInstances(rootView);
         if (testInfo.getCurrentTestStationID() != null){
             btStation.setText(testInfo.getCurrentStationName());
             etScore.setHint(getResources().getString(R.string.label_score)+ " ("+testInfo.getCurrentStationUnit()+")");
         }
-
         btSubmit.setOnClickListener(this);
         btStation.setOnClickListener(this);
         etScore.setOnEditorActionListener(this);
-
+        networkChangeReceiver = new NetworkChangeReceiver();
+        networkChangeReceiver.setListener(this);
         return rootView;
     }
 
@@ -231,12 +233,17 @@ public class RecordingFragment extends Fragment implements View.OnClickListener,
         return true;
     }
 
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(final Context context, final Intent intent) {
-            String status = NetworkUtil.getConnectivityStatusString(context);
-            Toast.makeText(context, status, Toast.LENGTH_LONG).show();
-        }
-    };
+    @Override
+    public void networkAvailable() {
+        listAdapter.notifyDataSetChanged();
+        Toast.makeText(getActivity(),
+                "เชื่อมต่อเน็ตสำเร็จ",
+                Toast.LENGTH_SHORT)
+                .show();
+    }
 
+    @Override
+    public void networkUnavailable() {
+
+    }
 }
